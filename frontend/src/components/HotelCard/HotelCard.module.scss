@@ -1,0 +1,104 @@
+/* HotelCard.module.scss */
+
+
+.restaurant__card {
+    // border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    // text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    margin: 1.2rem;
+    position: relative;
+
+
+    &:hover {
+        transform: scale(0.95);
+    }
+
+    p {
+        margin-top: 5px;
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .cta__button {
+        margin-top: 15px;
+        padding: 8px 15px;
+        background-color: #FF5733;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        // box-sizing: border-box;
+
+        &:hover {
+            background-color: #FF471A;
+        }
+    }
+}
+
+
+@media (min-width: 768px) {
+    .card__container {
+        display: flex;
+        flex-direction: row;
+
+        &:nth-of-type(3) {
+            margin-bottom: 100px;
+        }
+
+        .restaurant__card {
+            max-width: 100%;
+            max-height: 100%;
+            height: 300px;
+            width: 100%;
+            // border-radius: 5%;
+            overflow: hidden;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .card__container {
+        display: flex;
+        flex-direction: row;
+
+        &:nth-of-type(3) {
+            margin-bottom: 35px;
+        }
+
+        .restaurant__card {
+            width: 100%;
+            max-width: 400px;
+            height: 130px;
+            overflow: hidden; // tests to make the button stay inside the card element! WARNING: DO NOT USE THIS
+            // display: flex; OR THIS
+            // flex-direction: column; OR THIS
+            position: relative;
+
+            .cta__button {
+                box-sizing: border-box;
+                // align-self: flex-end;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                // left: 30px; gives it a semi-good look, but not good
+                left: 0; // center look
+            
+                // width: 90px;
+            }
+
+            img {
+                object-fit: contain;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+    }
+}

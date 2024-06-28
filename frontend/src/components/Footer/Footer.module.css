@@ -1,0 +1,50 @@
+/* Footer.css */
+.footer {
+	display: none;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	background-color: #ffdb58;
+	color: white;
+	padding: 0;
+	text-align: center;
+	box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+	margin-top: 5rem;
+	height:50px;
+}
+
+.footer__links {
+	display: flex;
+	justify-content: space-around;
+}
+
+.footer__links a {
+  	text-decoration: none;
+  	color: #333;
+  	padding: 5px 15px;
+  	transition: background-color 0.3s ease;
+} /* there is no a tag only Link */
+
+.footer__links a:hover {
+	color: #ff5733;
+}
+
+.nav__item {
+	text-align: center; /* Center the content */
+	display: flex;
+	flex-direction: column; /* Stack icon and text vertically */
+	align-items: center; /* Center items horizontally */
+	color: red;
+}
+
+.nav-item .icon {
+	margin-bottom: 5px; /* Add space between icon and text */
+}
+
+@media (max-width: 768px) {
+	.footer {
+		display: block;
+	}
+}

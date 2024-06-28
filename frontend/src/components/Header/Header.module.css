@@ -1,0 +1,52 @@
+/* Header.css */
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+	background-color: #f8f8f8;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+	/* height: 200px; */
+  }
+
+/* .logo {
+	font-size: 1.5rem;
+	font-weight: bold;
+} */
+
+.logo {
+	/* height: 6em; */
+	font-family: 'Skranji', Arial, Helvetica, sans-serif;
+	font-size: 1.5rem;
+	font-weight: bold;
+	/* padding: 1.5em; */
+	will-change: filter;
+	transition: filter 300ms;
+  }
+
+.logo:hover {
+	filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+	filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+	from {
+	  transform: rotate(0deg);
+	}
+	to {
+	  transform: rotate(360deg);
+	}
+}
+  
+@media (prefers-reduced-motion: no-preference) {
+	.logo {
+	  animation: logo-spin infinite 20s linear;
+	}
+}

@@ -1,0 +1,15 @@
+# python
+__pycache__
+*.pyc
+*.pyx
+.venv
+
+# secrets
+.env
+*.pem
+
+# frontend
+node_modules/
+yarn.lock
+dist/
+*.db

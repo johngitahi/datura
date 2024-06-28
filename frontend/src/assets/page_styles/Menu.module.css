@@ -1,0 +1,49 @@
+/* Menu Page */
+.menuPage {
+	text-align: center;
+	/* padding: 10px; */
+	font-family: 'Space Grotesk';
+}
+  
+/* Menu Container */
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+}
+  
+/* Menu Item */
+.menuItem {
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+	padding: 0;
+	border-radius: 8px;
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	width: 297px;
+	transition: transform 0.2s ease-in-out;
+}
+  
+.menuItem:hover {
+	transform: scale(1.02);
+}
+  
+/* Menu Item Image */
+.menuItemImage {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+  
+/* Menu Item Title */
+.menuItemTitle {
+	font-size: 1.2rem;
+	margin: 10px 0;
+}
+  
+/* Menu Item Price */
+.menuItemPrice {
+	font-weight: bold;
+}
+  
