@@ -10,10 +10,10 @@ const Navbar = () => {
   };
 
   const navigate = useNavigate();
-  
+
   const navigateToHotels = () => {
-    navigate('/hotels')
-  }
+    navigate('/hotels');
+  };
 
   // I am thinking about deleting the state hooks as i am not using them for nothing
   // my thinking is that i can just use media queries to structure the site differently
@@ -26,12 +26,19 @@ const Navbar = () => {
         // className={`${styles.menuToggle} ${menuOpen ? styles.open : ''}`} original working version
         className={styles.menuToggle} // tweaked version
         onClick={navigateToHotels}
-      >Order Now
+      >
+        Order Now
       </button>
       <ul className={`${styles.navlist} ${menuOpen ? styles.open : ''}`}>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/hotels">Hotels</Link></li>
-        <li><Link to="/cart">Cart</Link></li>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/hotels">Hotels</Link>
+        </li>
+        <li>
+          <Link to="/cart">Cart</Link>
+        </li>
       </ul>
     </nav>
   );

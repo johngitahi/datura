@@ -1,22 +1,21 @@
-
 .adminlinks {
-	display: flex;
-	justify-content: space-around;
-	gap: 10px;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
 }
 
 .adminlinks a {
-	text-decoration: none;
-  	/* color: #333; */
-  	padding: 5px 15px;
-  	transition: background-color 0.3s ease;
-	border: 1px solid black;
-	border-radius: 15px;
+  text-decoration: none;
+  /* color: #333; */
+  padding: 5px 15px;
+  transition: background-color 0.3s ease;
+  border: 1px solid black;
+  border-radius: 15px;
 }
 
 .navlink {
-	text-align: center; /* Center the content */
-	display: flex;
-	flex-direction: row-reverse; /* Stack icon and text vertically */
-	align-items: center; /* Center items horizontally */
+  text-align: center; /* Center the content */
+  display: flex;
+  flex-direction: row-reverse; /* Stack icon and text vertically */
+  align-items: center; /* Center items horizontally */
 }

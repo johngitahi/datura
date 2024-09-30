@@ -68,7 +68,7 @@ async def trigger_stkp_payment(amount: int, client_mpesa_no: int):
         "PartyA": client_mpesa_no,
         "PartyB": settings.till_number,
         "PhoneNumber": client_mpesa_no,
-        "CallBackURL": "https://api.example.com/pay/callback/",  # i was ngrok all along, caused errors
+        "CallBackURL": "https://api.ziptdeliveries.com/pay/callback/",  # i was ngrok all along, caused errors
         "AccountReference": "zipT Food Delivery",
         "TransactionDesc": "Your Food and Delivery Fee",
     }

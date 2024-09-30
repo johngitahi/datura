@@ -2,39 +2,38 @@
 
 /* Table styles */
 .table {
-	border-collapse: collapse;
-	width: 100%;
-	border: 1px solid #ddd;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
 }
-  
+
 /* Table header styles */
 .th {
-	padding: 8px;
-	text-align: left;
-	border-bottom: 1px solid #ddd;
-	background-color: #f2f2f2;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  background-color: #f2f2f2;
 }
 
 /* Table cell styles */
 .td {
-	padding: 8px;
-	text-align: left;
-	border-bottom: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
-  
+
 /* Alternate row styles */
 .trEven {
-	background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
-  
+
 /* Style the Update Delivery Button */
 .updatebtn {
-	background-color: #007bff;
-	border: black;
-	color: white;
-
+  background-color: #007bff;
+  border: black;
+  color: white;
 }
 
 .updatebtn:hover {
-	background-color: #ff5733;
+  background-color: #ff5733;
 }

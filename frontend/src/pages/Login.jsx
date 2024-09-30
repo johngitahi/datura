@@ -5,22 +5,19 @@ import WLoader from '../components/Loader/Loader';
 import Admin from './Admin';
 
 const LoginPage = () => {
-
-  const { isLoading, isAuthenticated } = useAuth0()
+  const { isLoading, isAuthenticated } = useAuth0();
 
   if (isLoading) {
-    return <WLoader />
+    return <WLoader />;
   }
 
-  return (
-    !isAuthenticated ? (
-      <div className="login-page-container">
-        <h2>Please Log In</h2>
-        <LoginButton />
-      </div>
-    ) : (
-      <Admin />
-    )
+  return !isAuthenticated ? (
+    <div className="login-page-container">
+      <h2>Please Log In</h2>
+      <LoginButton />
+    </div>
+  ) : (
+    <Admin />
   );
 };
 

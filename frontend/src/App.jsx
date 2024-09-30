@@ -25,7 +25,7 @@ import ReactGA from "react-ga4";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  ReactGA.initialize("your_gtag_here"); 
+  ReactGA.initialize("G-ED1HCK9BWY"); 
   return (
     <Router>
       <Routes>

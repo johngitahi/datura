@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "axios": "^1.4.0",
     "firebase": "^10.4.0",
+    "lucide-react": "^0.446.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,6 +24,7 @@
     "react-ga4": "^2.1.0",
     "react-router-dom": "^6.15.0",
     "react-slick": "^0.29.0",
+    "recharts": "^2.12.7",
     "sass": "^1.66.1",
     "use-local-storage-state": "^19.0.4",
     "webfontloader": "^1.6.28"
@@ -31,13 +33,16 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "postcss": "^8.4.47",
     "prettier": "^3.0.2",
+    "tailwindcss": "^3.4.13",
     "vite": "^4.4.5"
   }
 }

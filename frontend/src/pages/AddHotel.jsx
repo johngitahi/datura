@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../assets/page_styles/AddHotel.module.css'; // Import the CSS Module
-import { BASE_API } from "../constants";
+import { BASE_API } from '../constants';
 
 const API_URL = `${BASE_API}/hotels`;
 
@@ -44,7 +44,9 @@ function AddHotel() {
   };
 
   return (
-    <div className={styles.formContainer}> {/* Use the CSS Module class */}
+    <div className={styles.formContainer}>
+      {' '}
+      {/* Use the CSS Module class */}
       <h2>Add a Hotel</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -86,7 +88,9 @@ function AddHotel() {
             className={styles.input}
           />
         </div>
-        <button type="submit" className={styles.button}>Add Hotel</button>
+        <button type="submit" className={styles.button}>
+          Add Hotel
+        </button>
       </form>
     </div>
   );

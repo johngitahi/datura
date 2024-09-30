@@ -13,18 +13,22 @@ These instructions will help you set up and run the frontend locally on your mac
 - Node.js and npm (or Yarn) installed on your machine.
 
 ### Setting up the environment
+
 1. Install the dependencies
+
 ```bash
 npm install / yarn install
 ```
 
 ### Usage
+
 1. To start the development server (for dev only, on prod do prod procedure)
+
 ```bash
 npm run dev / yarn dev
 ```
-open `http://localhost:5173` in your browser to see the application.
 
+open `http://localhost:5173` in your browser to see the application.
 
 ## Features
 
@@ -34,8 +38,8 @@ open `http://localhost:5173` in your browser to see the application.
 - [ ] User authentication and profile management.
 - [ ] Order history and tracking.
 
-
 ## Contributing
+
 If you find a bug or want to add a new feature, please follow these steps:
 
 1. Create a new branch for your feature/fix.

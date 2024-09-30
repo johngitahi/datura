@@ -1,28 +1,27 @@
 /* Quantifier.module.css */
 
 .quantifier {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
-  
+
 .buttonMinus,
 .buttonPlus {
-	background-color: #007bff; /* Button background color */
-	color: #fff; /* Text color */
-	border: none;
-	padding: 8px 12px;
-	cursor: pointer;
-	font-size: 16px;
-	transition: background-color 0.3s ease;
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Text color */
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
-  
+
 .buttonMinus:hover,
 .buttonPlus:hover {
-	background-color: #0056b3; /* Button background color on hover */
+  background-color: #0056b3; /* Button background color on hover */
 }
-  
+
 .quantityField {
-	margin: 0 12px; /* Adjust margin as needed */
-	font-size: 18px;
+  margin: 0 12px; /* Adjust margin as needed */
+  font-size: 18px;
 }
-  

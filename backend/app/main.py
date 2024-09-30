@@ -25,12 +25,12 @@ app = FastAPI()
 ### SETUP CORS
 
 origins = [
-    "https://example.com",  # frontend URL
+    "https://ziptdeliveries.com",  # frontend URL
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # this looks sus
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -1,41 +1,40 @@
 // CartSection.module.scss
 
 .cart {
-	border: 1px solid #ccc;
-	padding: 20px;
-	margin-top: 20px;
-  
-	h1 {
-	  font-size: 44px;
-	  font-family: 'Lato';
-	  margin-bottom: 10px;
-	}
-  
-	.container {
-	  display: flex;
-	  flex-direction: column;
-	  gap: 20px;
-	}
-  
-	.product {
-	  border: 1px solid #ddd;
-	  padding: 15px;
-	  border-radius: 5px;
-  
-	  h3 {
-		font-size: 18px;
-		margin-bottom: 8px;
-	  }
-	}
-  
-	p.total-price {
-	  font-size: 18px;
-	  margin-top: 20px;
-	  text-align: center;
-	}
-  
-	.delivery-form-container {
-	  margin-top: 20px;
-	}
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-top: 20px;
 
-}  
+  h1 {
+    font-size: 44px;
+    font-family: 'Lato';
+    margin-bottom: 10px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .product {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+  }
+
+  p.total-price {
+    font-size: 18px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .delivery-form-container {
+    margin-top: 20px;
+  }
+}

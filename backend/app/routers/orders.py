@@ -9,7 +9,7 @@ router = APIRouter(prefix="/orders")
 # permision create order
 @router.post("")
 async def place_new_order(create_order_data: Request, db: Session = Depends(get_db)):
-    # unraffle the request body first, i.e. from React frontend
+# unraffle the request body first, i.e. from React frontend
 
     # {
     # 	"address": 'Wextlive',
@@ -94,5 +94,27 @@ def get_confirmed_orders(db: Session = Depends(get_db)):
 
 @router.put("/UpdateDeliveryStatus/{order_id}")
 def update_order_deliverey_status(order_id, db: Session = Depends(get_db)):
-    res = order_repository.update_order_delivery_status(db, order_id)
-    return res
+    response_status = order_repository.update_order_delivery_status(db, order_id)
+    return response_status
+
+
+@router.get("/today")
+def get_today_orders(db: Session = Depends(get_db)):
+    today_orders = order_repository.get_today_orders()
+    return today_orders
+
+@router.get("/weekanalytics")
+def get_week_analytics(db: Session = Depends(get_db)):
+    week_analytics = order_repository.get_order_analytics_for_week()
+    return week_analytics
+
+@router.get("/dayanalytics")
+def get_day_analytics(db: Session = Depends(get_db)):
+    day_analytics = order_repository.get_order_analytics_today()
+    return day_analytics
+
+@router.get("/alltoday")
+def get_all_orders_today(db: Session = Depends(get_db)):
+    all_orders_today = order_repository.get_all_orders_for_today()
+    return all_orders_today
+    

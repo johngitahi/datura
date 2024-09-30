@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     till_number: int
     short_code: int
     passkey: str
-    #DATABASE_CONN: str
+    DATABASE_CONN: str
     BOT_TOKEN: str
 
     @classmethod

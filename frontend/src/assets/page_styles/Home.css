@@ -6,129 +6,128 @@
     /* background-color: paleturquoise;
 } */
 
-
 .value-prop {
-    text-align: center;
-    margin-bottom: 30px;
-    margin-top: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 15px;
 }
 
 .value-prop h1 {
-    font-family: 'Syne';
-    font-size: 45px;
-    color: inherit;
-    text-align: left;
-    margin-left: 0.5rem;
-    font-weight: 700;
+  font-family: 'Syne';
+  font-size: 45px;
+  color: inherit;
+  text-align: left;
+  margin-left: 0.5rem;
+  font-weight: 700;
 }
 
 .value-prop p {
-    font-family: 'Lato';
+  font-family: 'Lato';
 }
 
 .cta-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #FF5733;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff5733;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
 .cta-button:hover {
-    color: white;
+  color: white;
 }
 
 @media (min-width: 768px) {
-    .featured-restaurants {
-        /* margin-top: 100px; */
-        margin-bottom: 100px;
-    }
+  .featured-restaurants {
+    /* margin-top: 100px; */
+    margin-bottom: 100px;
+  }
 }
 
 .search-bar button {
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .search-food {
-    width: 60%; /* Adjust the width as needed */
-    padding: 10px;/* Adjust padding as needed */
-    border: 1px solid #ccc;
-    border-radius: 35px; /* Rounded corners */
-    font-size: 16px; /* Adjust font size */
-    color: #333;
+  width: 60%; /* Adjust the width as needed */
+  padding: 10px; /* Adjust padding as needed */
+  border: 1px solid #ccc;
+  border-radius: 35px; /* Rounded corners */
+  font-size: 16px; /* Adjust font size */
+  color: #333;
 }
 .search-food:focus {
-    outline: none; /* Remove the default focus outline */
-    border-color: #007bff; /* Change border color on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle box shadow on focus */
+  outline: none; /* Remove the default focus outline */
+  border-color: #007bff; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle box shadow on focus */
 }
 
 /* Testimonial Section */
 .testimonials {
-    background-color: #f8f8f8; /* Light background */
-    padding: 40px 0; /* Adjust padding as needed */
-    text-align: center;
+  background-color: #f8f8f8; /* Light background */
+  padding: 40px 0; /* Adjust padding as needed */
+  text-align: center;
 }
 
 /* Testimonial Heading */
 .testimonials h2 {
-    font-size: 2rem; /* Larger heading font size */
-    margin-bottom: 20px; /* Spacing below heading */
-    color: #333; /* Heading color */
-    font-family: Arial, sans-serif; /* Standard font */
+  font-size: 2rem; /* Larger heading font size */
+  margin-bottom: 20px; /* Spacing below heading */
+  color: #333; /* Heading color */
+  font-family: Arial, sans-serif; /* Standard font */
 }
 
 /* Testimonial List Container */
 .testimonial-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px; /* Spacing between testimonials */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Spacing between testimonials */
 }
-  
+
 /* Individual Testimonial */
 .testimonial {
-    background-color: inherit; /* Testimonial background */
-    border: 1px solid #ddd; /* Border around testimonial */
-    padding: 10px; /* Testimonial padding */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2); /* Subtle box shadow */
-    text-align: center; /* Center text within the testimonial box */
-    width: 300px;
+  background-color: inherit; /* Testimonial background */
+  border: 1px solid #ddd; /* Border around testimonial */
+  padding: 10px; /* Testimonial padding */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2); /* Subtle box shadow */
+  text-align: center; /* Center text within the testimonial box */
+  width: 300px;
 }
-  
+
 /* Testimonial Text */
 .testimonial-text {
-    font-size: 1.1rem; /* Testimonial text font size */
-    margin: 10px 0; /* Spacing around text */
-    color: #444; /* Text color */
-    font-family: Arial, sans-serif; /* Standard font */
+  font-size: 1.1rem; /* Testimonial text font size */
+  margin: 10px 0; /* Spacing around text */
+  color: #444; /* Text color */
+  font-family: Arial, sans-serif; /* Standard font */
 }
-  
+
 /* Testimonial Name */
 .testimonial-name {
-    font-weight: bold; /* Testimonial name font weight */
-    color: #007bff; /* Accent color */
-    font-family: 'Fira Sans', sans-serif; /* Standard font */
+  font-weight: bold; /* Testimonial name font weight */
+  color: #007bff; /* Accent color */
+  font-family: 'Fira Sans', sans-serif; /* Standard font */
 }
 
 .info-banner {
-    background-color: #007bff;
-    max-width: 100%;
-    height: 35px;
-    /* margin-top: 8px; */
+  background-color: #007bff;
+  max-width: 100%;
+  height: 35px;
+  /* margin-top: 8px; */
 }
 
 .info-banner .carousel {
-    animation: scrollText 4s linear infinite;   
+  animation: scrollText 4s linear infinite;
 }
 
 @keyframes scrollText {
-	0% {
-	  transform: translateX(10%);
-	}
-	100% {
-	  transform: translateX(-10%);
-	}
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(-10%);
+  }
 }

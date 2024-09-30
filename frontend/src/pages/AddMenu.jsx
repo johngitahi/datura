@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styles from "../assets/page_styles/AddMenu.module.css";
-import { BASE_API } from "../constants";
+import styles from '../assets/page_styles/AddMenu.module.css';
+import { BASE_API } from '../constants';
 
 const API_URL = `${BASE_API}/hotels/menu`;
 

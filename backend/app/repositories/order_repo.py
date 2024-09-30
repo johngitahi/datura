@@ -3,6 +3,7 @@ from config import settings
 from domain.models import Orders, OrderItem
 import telegram
 from telegram.constants import ParseMode
+from datetime import datetime, timedelta
 
 
 class OrderRepository:
@@ -28,14 +29,12 @@ class OrderRepository:
         # merchant_id_integer = int(merchant_id_integer_unsliced[0:6])
 
         new_order = Orders(
-            # order_id=merchant_id_integer,
-            order_id=merchantID,  # replacing with this as the thing is now a string
-            # user_id=merchant_id_integer,
+            order_id=merchantID,
             order_total=new_order_data["total"],
-            customer_phone=billing_number,
             delivery_location=new_order_data["address"],
-            delivery_status="Null",
+            customer_phone=billing_number,
             order_status="Pending",
+            delivery_status="Null"
         )
 
         db.add(new_order)
@@ -66,15 +65,18 @@ class OrderRepository:
 
         hotel_map = {
             1: "Kwa Festo",
-            2: "Luminex Restaurant",
-            3: "Savor Cafe",
-            4: "Lexys Restaurant",
-            5: "Kiqwetu Baraks Hotel",
+            2: "Kiqwetu Baraqs",
+            3: "Summit Hotel",
+            4: "Zipt Groceries",
+            5: "Chebiis Hotel",
+            6: "Kwa Customer",
+            7: "Lelan Hotel",
+            8: "Lexys Hotel"
         }
 
         message = (
             f"New order: `{merchantID}`\n"
-            f"Confirm here: https://t\.ly/ey43z\n"
+            f"Confirm here: https://t\.ly/VMRL4\n"
             f"Delivery Location: {new_order_data['address']}\n"
             f"Total Amount: {new_order_data['total']} KES\n"
             f"Phone Number: \+{billing_number}\n\n"
@@ -135,6 +137,105 @@ class OrderRepository:
             return {"msg": "Order not found"}
 
         order.delivery_status = "Delivered"
+        time_delivered = datetime.now(timezone.utc) + timedelta(hours=3)
+        order.delivered_at = time_delivered
         db.commit()
         db.refresh(order)
         return {"msg": "Order delivery status updated"}
+
+    def get_today_orders(self, db: SessionType):
+        # Get current UTC time and convert to the local timezone (EAT)
+        now_utc = datetime.now(timezone.utc)
+        today_start = now_utc + timedelta(hours=3)
+        today_start = today_start.replace(hour=0, minute=0, second=0, microsecond=0)
+        tomorrow_start = today_start + timedelta(days=1)
+
+        # Query for today's confirmed orders
+        return db.query(Orders).filter(
+            Orders.created_at >= today_start,
+            Orders.created_at < tomorrow_start,
+            Orders.order_status == "Confirmed"
+        ).all()
+
+    # Order analytics for the day
+    def get_order_analytics_today(self, db: SessionType):
+        now_utc = datetime.now(timezone.utc)
+        today_start = now_utc + timedelta(hours=3)
+        today_start = today_start.replace(hour=0, minute=0, second=0, microsecond=0)
+        tomorrow_start = today_start + timedelta(days=1)
+
+        # Total orders today
+        total_orders_today = db.query(Orders).filter(
+            Orders.created_at >= today_start,
+            Orders.created_at < tomorrow_start
+        ).count()
+
+        # Confirmed orders today
+        confirmed_orders_today = db.query(Orders).filter(
+            Orders.created_at >= today_start,
+            Orders.created_at < tomorrow_start,
+            Orders.order_status == "Confirmed"
+        ).count()
+
+        # Total revenue today
+        total_revenue_today = db.query(Orders).filter(
+            Orders.created_at >= today_start,
+            Orders.created_at < tomorrow_start,
+            Orders.order_status == "Confirmed"
+        ).with_entities(db.func.sum(Orders.order_total)).scalar() or 0
+
+        return {
+            "total_orders_today": total_orders_today,
+            "confirmed_orders_today": confirmed_orders_today,
+            "total_revenue_today": total_revenue_today
+        }
+
+    def get_all_orders_for_today(self, db: SessionType):
+        # Get current UTC time and convert to the local timezone (EAT)
+        now_utc = datetime.now(timezone.utc)
+        today_start = now_utc + timedelta(hours=3)
+        today_start = today_start.replace(hour=0, minute=0, second=0, microsecond=0)
+        tomorrow_start = today_start + timedelta(days=1)
+
+        # Query for today's orders (regardless of order_status)
+        return self.db.query(Orders).filter(
+            Orders.created_at >= today_start,
+            Orders.created_at < tomorrow_start
+        ).all()
+        
+
+    def get_order_analytics_for_week(self, db: SessionType):
+        # Get current UTC time and convert to the local timezone (EAT)
+        now_utc = datetime.now(timezone.utc)
+        today_start = now_utc + timedelta(hours=3)
+        today_start = today_start.replace(hour=0, minute=0, second=0, microsecond=0)
+        
+        # Calculate the start of the week (7 days ago)
+        week_start = today_start - timedelta(days=7)
+        tomorrow_start = today_start + timedelta(days=1)
+
+        # Total orders this week
+        total_orders_week = db.query(Orders).filter(
+            Orders.created_at >= week_start,
+            Orders.created_at < tomorrow_start
+        ).count()
+
+        # Confirmed orders this week
+        confirmed_orders_week = db.query(Orders).filter(
+            Orders.created_at >= week_start,
+            Orders.created_at < tomorrow_start,
+            Orders.order_status == "Confirmed"
+        ).count()
+
+        # Total revenue this week
+        total_revenue_week = db.query(Orders).filter(
+            Orders.created_at >= week_start,
+            Orders.created_at < tomorrow_start,
+            Orders.order_status == "Confirmed"
+        ).with_entities(db.func.sum(Orders.order_total)).scalar() or 0
+
+        return {
+            "total_orders_week": total_orders_week,
+            "confirmed_orders_week": confirmed_orders_week,
+            "total_revenue_week": total_revenue_week
+        }

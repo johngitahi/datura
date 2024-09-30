@@ -1,6 +1,7 @@
-
 .hotels {
-	max-width: 100%;
-	width: fit-content;
-	// background-color: red;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }

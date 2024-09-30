@@ -11,7 +11,7 @@ WebFont.load({
       'Syne:700,800',
       'Space+Grotesk:600',
       'Fira+Sans:600',
-      'Skranji:400'
+      'Skranji:400',
     ],
   },
 });

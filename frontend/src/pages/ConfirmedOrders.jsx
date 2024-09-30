@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ConfirmedOrdersTable from '../components/ConfirmedOrdersTable/ConfirmedOrdersTable';
-import { BASE_API } from "../constants";
+import { BASE_API } from '../constants';
 
 const BASE_URL = `${BASE_API}/orders/ConfirmedOrders`;
 
@@ -19,7 +19,7 @@ const ConfirmedOrders = () => {
 
   return (
     <div>
-      <ConfirmedOrdersTable confirmedOrders={confirmedOrders}/>
+      <ConfirmedOrdersTable confirmedOrders={confirmedOrders} />
     </div>
   );
 };

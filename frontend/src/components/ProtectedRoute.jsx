@@ -6,14 +6,14 @@ import WLoader from './Loader/Loader';
 const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth0();
 
-  return (
-        isLoading ? (
-          <div><WLoader/></div> // Show loading spinner or message
-        ) : isAuthenticated ? (
-          <Outlet />
-        ) : (
-          <Navigate to="/login" />
-        )
+  return isLoading ? (
+    <div>
+      <WLoader />
+    </div> // Show loading spinner or message
+  ) : isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/login" />
   );
 };
 

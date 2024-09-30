@@ -60,12 +60,12 @@ async def add_hotel(
 ):
     try:
         # Upload image to AWS S3
-        image_uploaded = upload_to_aws(image, "hotels_logo", image.filename)
+        image_uploaded = upload_to_aws(image, "zipt", image.filename)
 
         # If image upload successful, proceed to add hotel to database
         if image_uploaded:
             # Construct the image URL using the S3 bucket URL and file name
-            logo_url = f"https://business.s3.amazonaws.com/{image.filename}"
+            logo_url = f"https://zipt.s3.amazonaws.com/{image.filename}"
             
             # Add hotel to the database with the image URL
             hotel_data = {

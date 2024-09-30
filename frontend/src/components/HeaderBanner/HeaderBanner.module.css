@@ -1,29 +1,28 @@
 /* Banner.module.css */
 .banner {
-	position: absolute;
-	top: 65px;
-	left: 0;
-	right: 0;
-	background-color: #007bff;
-	color: white;
-	text-align: center;
-	/* padding: 0 0; */
-	z-index: 1;
-	height: 30px;
+  position: absolute;
+  top: 65px;
+  left: 0;
+  right: 0;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  /* padding: 0 0; */
+  z-index: 1;
+  height: 30px;
 }
-  
+
 .textCarousel {
-	animation: scrollText 16s linear infinite;
-	white-space: nowrap;
-	font-size: 12px;
+  animation: scrollText 16s linear infinite;
+  white-space: nowrap;
+  font-size: 12px;
 }
-  
+
 @keyframes scrollText {
-	0% {
-	  transform: translateX(100%);
-	}
-	100% {
-	  transform: translateX(-100%);
-	}
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
-  
