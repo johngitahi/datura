@@ -18,6 +18,7 @@ import {
   LoginPage,
 } from "./pages";
 
+import Dashboard from "./components/Dashboard";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
 import "./App.css";
 import "./fontConfig";
@@ -41,6 +42,7 @@ function App() {
             <Route path="ConfirmedOrders" element={<ConfirmedOrders />} />
             <Route path="AddHotel" element={<AddHotel />} />
             <Route path="AddMenu" element={<AddMenu />} />
+	    <Route path="research" element={<Dashboard />} />  
           </Route>
           <Route path='/login' element={<LoginPage/>} />
 
