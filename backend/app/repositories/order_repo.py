@@ -217,7 +217,7 @@ class OrderRepository:
 
         # Query for today's orders (regardless of order_status)
         return (
-            self.db.query(Orders)
+            db.query(Orders)
             .filter(
                 Orders.created_at >= today_start, Orders.created_at < tomorrow_start
             )
