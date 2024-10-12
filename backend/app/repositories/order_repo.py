@@ -34,7 +34,7 @@ class OrderRepository:
             delivery_location=new_order_data["address"],
             customer_phone=billing_number,
             order_status="Pending",
-            delivery_status="Null"
+            delivery_status="Null",
         )
 
         db.add(new_order)
@@ -66,12 +66,12 @@ class OrderRepository:
         hotel_map = {
             1: "Kwa Festo",
             2: "Kiqwetu Baraqs",
-            3: "Summit Hotel",
-            4: "Zipt Groceries",
-            5: "Chebiis Hotel",
-            6: "Kwa Customer",
-            7: "Lelan Hotel",
-            8: "Lexys Hotel"
+            3: "Lelan Hotel",
+            4: "Summit Hotel",
+            5: "zipT Groceries",
+            6: "Chebiis Hotel",
+            7: "Kwa Customer",
+            8: "Lexys Hotel",
         }
 
         message = (
@@ -83,8 +83,8 @@ class OrderRepository:
             "Order Details:\n"
         )
 
-        for item in new_order_data['order_data']:
-            hotel_id = item['hotel_id']
+        for item in new_order_data["order_data"]:
+            hotel_id = item["hotel_id"]
             hotel_name = hotel_map.get(hotel_id, "unknown")
 
             item_message = (
@@ -151,11 +151,15 @@ class OrderRepository:
         tomorrow_start = today_start + timedelta(days=1)
 
         # Query for today's confirmed orders
-        return db.query(Orders).filter(
-            Orders.created_at >= today_start,
-            Orders.created_at < tomorrow_start,
-            Orders.order_status == "Confirmed"
-        ).all()
+        return (
+            db.query(Orders)
+            .filter(
+                Orders.created_at >= today_start,
+                Orders.created_at < tomorrow_start,
+                Orders.order_status == "Confirmed",
+            )
+            .all()
+        )
 
     # Order analytics for the day
     def get_order_analytics_today(self, db: SessionType):
@@ -165,29 +169,42 @@ class OrderRepository:
         tomorrow_start = today_start + timedelta(days=1)
 
         # Total orders today
-        total_orders_today = db.query(Orders).filter(
-            Orders.created_at >= today_start,
-            Orders.created_at < tomorrow_start
-        ).count()
+        total_orders_today = (
+            db.query(Orders)
+            .filter(
+                Orders.created_at >= today_start, Orders.created_at < tomorrow_start
+            )
+            .count()
+        )
 
         # Confirmed orders today
-        confirmed_orders_today = db.query(Orders).filter(
-            Orders.created_at >= today_start,
-            Orders.created_at < tomorrow_start,
-            Orders.order_status == "Confirmed"
-        ).count()
+        confirmed_orders_today = (
+            db.query(Orders)
+            .filter(
+                Orders.created_at >= today_start,
+                Orders.created_at < tomorrow_start,
+                Orders.order_status == "Confirmed",
+            )
+            .count()
+        )
 
         # Total revenue today
-        total_revenue_today = db.query(Orders).filter(
-            Orders.created_at >= today_start,
-            Orders.created_at < tomorrow_start,
-            Orders.order_status == "Confirmed"
-        ).with_entities(db.func.sum(Orders.order_total)).scalar() or 0
+        total_revenue_today = (
+            db.query(Orders)
+            .filter(
+                Orders.created_at >= today_start,
+                Orders.created_at < tomorrow_start,
+                Orders.order_status == "Confirmed",
+            )
+            .with_entities(db.func.sum(Orders.order_total))
+            .scalar()
+            or 0
+        )
 
         return {
             "total_orders_today": total_orders_today,
             "confirmed_orders_today": confirmed_orders_today,
-            "total_revenue_today": total_revenue_today
+            "total_revenue_today": total_revenue_today,
         }
 
     def get_all_orders_for_today(self, db: SessionType):
@@ -198,44 +215,70 @@ class OrderRepository:
         tomorrow_start = today_start + timedelta(days=1)
 
         # Query for today's orders (regardless of order_status)
-        return self.db.query(Orders).filter(
-            Orders.created_at >= today_start,
-            Orders.created_at < tomorrow_start
-        ).all()
-        
+        return (
+            self.db.query(Orders)
+            .filter(
+                Orders.created_at >= today_start, Orders.created_at < tomorrow_start
+            )
+            .all()
+        )
 
-    def get_order_analytics_for_week(self, db: SessionType):
+    def get_order_analytics_for_week(self, db: SessionType, week_number: int = None):
         # Get current UTC time and convert to the local timezone (EAT)
         now_utc = datetime.now(timezone.utc)
-        today_start = now_utc + timedelta(hours=3)
-        today_start = today_start.replace(hour=0, minute=0, second=0, microsecond=0)
-        
-        # Calculate the start of the week (7 days ago)
-        week_start = today_start - timedelta(days=7)
-        tomorrow_start = today_start + timedelta(days=1)
+        now_eat = now_utc + timedelta(hours=3)
+
+        # If week_number is not provided, use the current week
+        if week_number is None:
+            week_number = now_eat.isocalendar()[1]
+
+        # Calculate the start of the specified week
+        year = now_eat.year
+        week_start = datetime.fromisocalendar(
+            year, week_number, 1
+        )  # Monday of the specified week
+        week_start = week_start.replace(
+            tzinfo=timezone(timedelta(hours=3))
+        )  # Set EAT timezone
+
+        # Calculate the start of the next week
+        next_week_start = week_start + timedelta(days=7)
 
         # Total orders this week
-        total_orders_week = db.query(Orders).filter(
-            Orders.created_at >= week_start,
-            Orders.created_at < tomorrow_start
-        ).count()
+        total_orders_week = (
+            db.query(Orders)
+            .filter(
+                Orders.created_at >= week_start, Orders.created_at < next_week_start
+            )
+            .count()
+        )
 
         # Confirmed orders this week
-        confirmed_orders_week = db.query(Orders).filter(
-            Orders.created_at >= week_start,
-            Orders.created_at < tomorrow_start,
-            Orders.order_status == "Confirmed"
-        ).count()
+        confirmed_orders_week = (
+            db.query(Orders)
+            .filter(
+                Orders.created_at >= week_start,
+                Orders.created_at < next_week_start,
+                Orders.order_status == "Confirmed",
+            )
+            .count()
+        )
 
         # Total revenue this week
-        total_revenue_week = db.query(Orders).filter(
-            Orders.created_at >= week_start,
-            Orders.created_at < tomorrow_start,
-            Orders.order_status == "Confirmed"
-        ).with_entities(db.func.sum(Orders.order_total)).scalar() or 0
+        total_revenue_week = (
+            db.query(func.sum(Orders.order_total))
+            .filter(
+                Orders.created_at >= week_start,
+                Orders.created_at < next_week_start,
+                Orders.order_status == "Confirmed",
+            )
+            .scalar()
+            or 0
+        )
 
         return {
+            "week_number": week_number,
             "total_orders_week": total_orders_week,
             "confirmed_orders_week": confirmed_orders_week,
-            "total_revenue_week": total_revenue_week
+            "total_revenue_week": total_revenue_week,
         }
