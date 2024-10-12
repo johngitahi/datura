@@ -4,6 +4,7 @@ from domain.models import Orders, OrderItem
 import telegram
 from telegram.constants import ParseMode
 from datetime import datetime, timedelta, timezone
+from sqlalchemy import func
 
 
 class OrderRepository:
