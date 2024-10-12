@@ -197,7 +197,7 @@ class OrderRepository:
                 Orders.created_at < tomorrow_start,
                 Orders.order_status == "Confirmed",
             )
-            .with_entities(db.func.sum(Orders.order_total))
+            .with_entities(func.sum(Orders.order_total))
             .scalar()
             or 0
         )
