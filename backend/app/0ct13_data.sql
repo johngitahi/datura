@@ -1,0 +1,879 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.3
+-- Dumped by pg_dump version 16.4 (Ubuntu 16.4-0ubuntu0.24.04.2)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: hotels; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.hotels (
+    hotel_id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    location character varying(255) NOT NULL,
+    phone character varying(20) NOT NULL,
+    logo_url character varying NOT NULL
+);
+
+
+ALTER TABLE public.hotels OWNER TO postgres;
+
+--
+-- Name: hotels_hotel_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.hotels_hotel_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.hotels_hotel_id_seq OWNER TO postgres;
+
+--
+-- Name: hotels_hotel_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.hotels_hotel_id_seq OWNED BY public.hotels.hotel_id;
+
+
+--
+-- Name: menu; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.menu (
+    menu_id integer NOT NULL,
+    hotel_id integer NOT NULL,
+    item_name character varying(255) NOT NULL,
+    price integer NOT NULL,
+    image_url character varying(255)
+);
+
+
+ALTER TABLE public.menu OWNER TO postgres;
+
+--
+-- Name: menu_menu_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.menu_menu_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.menu_menu_id_seq OWNER TO postgres;
+
+--
+-- Name: menu_menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.menu_menu_id_seq OWNED BY public.menu.menu_id;
+
+
+--
+-- Name: order_items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.order_items (
+    order_item_id integer NOT NULL,
+    order_id character varying NOT NULL,
+    hotel_id integer NOT NULL,
+    item_name character varying NOT NULL,
+    quantity integer NOT NULL,
+    price integer NOT NULL
+);
+
+
+ALTER TABLE public.order_items OWNER TO postgres;
+
+--
+-- Name: order_items_order_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.order_items_order_item_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.order_items_order_item_id_seq OWNER TO postgres;
+
+--
+-- Name: order_items_order_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.order_items_order_item_id_seq OWNED BY public.order_items.order_item_id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orders (
+    order_id character varying NOT NULL,
+    order_total integer NOT NULL,
+    delivery_location character varying NOT NULL,
+    customer_phone character varying NOT NULL,
+    order_status character varying NOT NULL,
+    delivery_status character varying(20) NOT NULL,
+    created_at timestamp without time zone DEFAULT ((now() AT TIME ZONE 'UTC'::text) + '03:00:00'::interval) NOT NULL,
+    delivered_at timestamp without time zone
+);
+
+
+ALTER TABLE public.orders OWNER TO postgres;
+
+--
+-- Name: hotels hotel_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hotels ALTER COLUMN hotel_id SET DEFAULT nextval('public.hotels_hotel_id_seq'::regclass);
+
+
+--
+-- Name: menu menu_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.menu ALTER COLUMN menu_id SET DEFAULT nextval('public.menu_menu_id_seq'::regclass);
+
+
+--
+-- Name: order_items order_item_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_items ALTER COLUMN order_item_id SET DEFAULT nextval('public.order_items_order_item_id_seq'::regclass);
+
+
+--
+-- Data for Name: hotels; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.hotels (hotel_id, name, location, phone, logo_url) FROM stdin;
+1	Kwa Festo	Next to Candy Shop	0748467252	https://zipt.s3.amazonaws.com/kwa-festo.png
+2	Kiqwetu Hotel(Barak's)	60m before Kabarak University Main Gate	0748467252	https://zipt.s3.amazonaws.com/1000214818.png
+4	Summit Hotel	Next to Dobiri Furniture	0748467252	https://zipt.s3.amazonaws.com/summit.png
+5	ZipT Groceries	Online	0748467252	https://zipt.s3.amazonaws.com/zipt-groceries.png
+6	Chebiis Hotel	Next to Candy Shop	0748467252	https://zipt.s3.amazonaws.com/chebiis.png
+7	Kwa Customer	Next to Candy Shop	0748467252	https://zipt.s3.amazonaws.com/customer.jpeg
+3	Lelan Hotel	Besides Zion Mini Matt Rafiki	0748467252	https://zipt.s3.amazonaws.com/lelan.png
+8	Lexys Hotel&Restaurant	Near Sun and Shield School	0748467252	https://zipt.s3.amazonaws.com/lexys.png
+\.
+
+
+--
+-- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.menu (menu_id, hotel_id, item_name, price, image_url) FROM stdin;
+1	1	Chapati	20	NULL
+2	1	Ugali	30	NULL
+3	1	Beans	40	NULL
+4	1	Ndengu	40	NULL
+5	1	Viazi	40	NULL
+6	1	Sukuma/Cabbage Stew	40	NULL
+7	1	Kamande	50	NULL
+8	1	Minji	50	NULL
+9	1	Beef stew	140	NULL
+10	1	Matumbo fry	90	NULL
+11	1	Ugali Mix	120	NULL
+12	1	Rice	40	NULL
+13	1	Scrambled Eggs	80	NULL
+14	1	Rice Special	120	NULL
+15	1	Pilau	100	NULL
+16	1	Pilau Special	140	NULL
+17	1	Samosa	40	NULL
+18	1	Kebab	40	NULL
+19	1	Smocha	60	NULL
+20	1	Rolex	70	NULL
+21	1	Minji Special	120	NULL
+22	1	Kamande Special	120	NULL
+23	1	Ndengu Special	120	NULL
+24	1	Beans Special	120	NULL
+25	2	Chapati	20	NULL
+26	2	Ugali	30	NULL
+27	2	Rice	50	NULL
+28	2	Pilau	100	NULL
+29	2	Beans	40	NULL
+30	2	Ndengu	40	NULL
+31	2	Minji	60	NULL
+32	2	Minced meat	80	NULL
+33	2	Matumbo	120	NULL
+34	2	Beef stew	170	NULL
+35	2	Liver stew	170	NULL
+36	2	Kuku small	120	NULL
+37	2	Kuku large	170	NULL
+38	2	Samosa	30	NULL
+39	2	Kebab	50	NULL
+40	2	Chips	100	NULL
+41	2	Chips Masala	120	NULL
+42	2	Juice small	40	NULL
+43	2	Juice large	80	NULL
+44	3	Chapati	30	NULL
+45	3	Mandazi	20	NULL
+46	3	Sausage	50	NULL
+47	3	Smokie	50	NULL
+48	3	Spanish Omelette	100	NULL
+49	3	Macho Omelette	701	NULL
+50	3	Kebab	100	NULL
+51	3	Samosa	50	NULL
+52	3	Githeri	100	NULL
+53	3	Ugali	50	NULL
+54	3	Managu	80	NULL
+55	3	Beans	70	NULL
+56	3	Minji	100	NULL
+57	3	Pilau	100	NULL
+58	3	Rice	80	NULL
+59	3	Chips	150	NULL
+60	3	Chips Masala	200	NULL
+61	3	Fish	150	NULL
+62	3	¼ Chicken	250	NULL
+63	4	Rice Special	120	NULL
+64	4	Pilau Special	150	NULL
+65	4	Viazi Special	130	NULL
+66	4	Rice Matumbo	150	NULL
+67	4	Ugali Matumbo	150	NULL
+68	4	Githeri Special	130	NULL
+69	4	Ugali Mix	120	NULL
+70	4	Ugali Beef	200	NULL
+71	4	Ugali scramble	100	NULL
+72	4	Spaghetti Tomato	100	NULL
+73	4	Spaghetti Bolognese	150	NULL
+74	4	Cheese Burger	180	NULL
+75	4	Beef Burger	180	NULL
+76	4	La Creme Burger	220	NULL
+77	4	Hungarian Choma Hotdog	130	NULL
+78	4	La creme Hotdog	180	NULL
+88	6	Rice Beans	90	NULL
+89	6	Rice Ndengu	90	NULL
+90	6	Rice Kamande	100	NULL
+91	6	Rice Beef	200	NULL
+92	6	Rice Mix	130	NULL
+93	6	Rice Matumbo	120	NULL
+94	6	Ugali Matumbo	120	NULL
+95	6	Ugali Samaki	200	NULL
+96	6	Ugali Beef	180	NULL
+97	6	Ugali Mix	130	NULL
+98	6	Ugali Omena	120	NULL
+99	6	Ugali Mboga	60	NULL
+100	6	Ugali Scramble	100	NULL
+101	6	Chapati 2& Beans	80	NULL
+102	6	Chapati 2& Ndengu	80	NULL
+103	6	Chapati 2& Kamande	90	NULL
+104	6	Chapati 2& Minji	100	NULL
+105	7	Chips	100	NULL
+106	7	Chips Masala	120	NULL
+108	7	Smokie	40	NULL
+109	7	Boiled Egg	25	NULL
+110	7	Chapati	20	NULL
+111	8	Plain stir-fried rice	100	NULL
+112	8	Beef Stew with Chapati	230	NULL
+113	8	Beef Stew with Rice	300	NULL
+114	8	Beans stew with Chapati	180	NULL
+115	8	Beans stew with Rice	200	NULL
+116	8	Spaghetti Bolognese	600	NULL
+117	8	Pasta Alfredo	600	NULL
+118	8	Meat Lovers Pizza	900	NULL
+119	8	Chicken Bacon Pizza	900	NULL
+120	8	Chicken BBQ	900	NULL
+121	8	HotDog	200	NULL
+122	8	Rolex	100	NULL
+123	8	Chicken Spring Rolls	80	NULL
+124	8	Mimi Southwestern rolls 1 piece	100	NULL
+125	8	Smokie	60	NULL
+126	8	Chicken Wings 3 pieces	350	NULL
+127	8	Chicken Sandwich with Fries	550	NULL
+128	8	Beef Burger with Fries	600	NULL
+129	8	Cheese Streak with Fries	600	NULL
+130	8	Fries	200	NULL
+131	8	Chicken Burrito	350	NULL
+132	8	Chicken Quesadillas	500	NULL
+133	8	Soft Tacos	350	NULL
+134	8	Chicken and Chips	500	NULL
+135	8	Chicken Quesadillas	250	NULL
+107	7	Smocha	65	NULL
+136	5	Bananas	50	\N
+137	5	Oranges	50	\N
+138	5	Mangoes	50	\N
+143	5	Pawpaw (Papaya)	200	\N
+142	5	Apple	40	\N
+141	5	Lemon	20	\N
+140	5	Watermelon	200	\N
+139	5	Pineapple	100	\N
+\.
+
+
+--
+-- Data for Name: order_items; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.order_items (order_item_id, order_id, hotel_id, item_name, quantity, price) FROM stdin;
+1	60e4-4f14-997e-f04c8c4f586d9828031	1	Chapati	3	20
+2	9096-43a2-9c4e-15e6d7a8d8f6172549091	3	Chapati	1	30
+3	feab-4d34-8ffb-457d02cd9bfc22616500	3	Chapati	1	30
+4	e1f1-482d-9538-d140c330be9b12170983	1	Chapati	1	20
+5	9566-48c7-8be0-71e5ae4748f078952799	1	Chapati	1	20
+6	0a83-4731-ac2e-58dccc54ee5922385209	1	Viazi	1	40
+7	0a83-4731-ac2e-58dccc54ee5922385209	1	Kamande	1	50
+8	0a83-4731-ac2e-58dccc54ee5922385209	1	Beef stew	1	140
+9	4f9d-4622-a0da-1c77977dad0c3756411	2	Chips Masala	1	120
+10	4f9d-4622-a0da-1c77977dad0c3756411	2	Juice large	1	80
+11	e1f1-482d-9538-d140c330be9b22491409	1	Chapati	2	20
+12	9566-48c7-8be0-71e5ae4748f094164622	2	Pilau	1	100
+13	9566-48c7-8be0-71e5ae4748f0101419464	4	Pilau Special	1	150
+14	a5e9-4493-bf74-289c5402a31821516140	2	Chips	1	100
+15	34ab-403e-b643-0699f1002087127184237	2	Chapati	2	20
+16	34ab-403e-b643-0699f1002087127184237	2	Kuku small	1	120
+17	34ab-403e-b643-0699f1002087127184237	2	Samosa	1	30
+18	f94f-4acd-a303-8fbbcf917962208668122	7	Chips	1	100
+19	f94f-4acd-a303-8fbbcf917962208668122	7	Smokie	1	40
+20	4f9d-4622-a0da-1c77977dad0c12973294	7	Chapati	2	20
+21	0a83-4731-ac2e-58dccc54ee5931889696	7	Chapati	2	20
+22	34ab-403e-b643-0699f1002087134360375	1	Chapati	2	20
+23	34ab-403e-b643-0699f1002087134360375	1	Pilau	1	100
+24	34ab-403e-b643-0699f1002087134360375	1	Smocha	1	60
+25	f94f-4acd-a303-8fbbcf917962213209611	7	Chips	1	100
+26	f94f-4acd-a303-8fbbcf917962213209611	7	Smocha	1	60
+27	4f9d-4622-a0da-1c77977dad0c19779708	1	Chapati	2	20
+28	ecab-4c60-99d3-11c7168133a0654089	2	Juice large	1	80
+29	ecab-4c60-99d3-11c7168133a0654089	6	Chapati 2& Beans	1	80
+30	6304-4ad6-ac84-b19cc6b06d891194286	7	Smocha	1	60
+31	6771-4f62-b538-7b914275850536016561	1	Smocha	2	60
+32	4f9d-4622-a0da-1c77977dad0c23383732	6	Chapati 2& Beans	1	80
+33	6771-4f62-b538-7b914275850539111687	2	Chapati	3	20
+34	ecab-4c60-99d3-11c7168133a03422888	1	Beans	1	40
+35	6304-4ad6-ac84-b19cc6b06d893438699	2	Beans	1	40
+36	dab3-4cb9-9110-99918efd35e35111377	2	Beans	1	40
+37	feab-4d34-8ffb-457d02cd9bfc55662975	2	Chapati	3	20
+38	feab-4d34-8ffb-457d02cd9bfc55662975	7	Chips	1	100
+39	a5e9-4493-bf74-289c5402a31838722259	1	Chapati	1	20
+40	a5e9-4493-bf74-289c5402a31838722259	1	Ugali	1	30
+41	a5e9-4493-bf74-289c5402a31838769671	1	Chapati	1	20
+42	a5e9-4493-bf74-289c5402a31838769671	1	Ugali	1	30
+43	a5e9-4493-bf74-289c5402a31838960504	2	Pilau	1	100
+44	a5e9-4493-bf74-289c5402a31838960504	2	Beef stew	1	170
+45	a5e9-4493-bf74-289c5402a31838960504	2	Chips Masala	1	120
+46	a5e9-4493-bf74-289c5402a31838960504	4	Pilau Special	1	150
+47	a5e9-4493-bf74-289c5402a31838960504	4	Rice Matumbo	1	150
+48	e1f1-482d-9538-d140c330be9b47990711	1	Beans	1	40
+49	ecab-4c60-99d3-11c7168133a07305515	1	Beans	1	40
+50	a5e9-4493-bf74-289c5402a31841508185	1	Chapati	1	20
+51	6304-4ad6-ac84-b19cc6b06d897449817	2	Chips Masala	2	120
+52	6304-4ad6-ac84-b19cc6b06d897449817	2	Juice large	1	80
+53	ecab-4c60-99d3-11c7168133a07659143	3	Chapati	2	30
+54	ecab-4c60-99d3-11c7168133a07659143	3	Minji	1	100
+55	e1f1-482d-9538-d140c330be9b49137394	7	Chips	1	100
+56	e1f1-482d-9538-d140c330be9b49137394	7	Chips Masala	1	120
+57	e1f1-482d-9538-d140c330be9b49137394	7	Smocha	1	60
+58	e1f1-482d-9538-d140c330be9b49137394	7	Smokie	1	40
+59	e1f1-482d-9538-d140c330be9b49137394	7	Boiled Egg	1	25
+60	e1f1-482d-9538-d140c330be9b49412427	2	Samosa	1	30
+61	e1f1-482d-9538-d140c330be9b49412427	2	Kebab	1	50
+62	e1f1-482d-9538-d140c330be9b49412427	2	Chips Masala	1	120
+63	0a83-4731-ac2e-58dccc54ee5949875097	4	Rice Special	2	120
+64	e1f1-482d-9538-d140c330be9b50144025	1	Chapati	1	20
+65	60e4-4f14-997e-f04c8c4f586d609169	1	Chapati	3	20
+66	60e4-4f14-997e-f04c8c4f586d609169	1	Ndengu	1	40
+67	6304-4ad6-ac84-b19cc6b06d8911376321	7	Chips	1	100
+68	e1f1-482d-9538-d140c330be9b51771349	3	Chapati	2	30
+69	e1f1-482d-9538-d140c330be9b51771349	3	Minji	1	100
+70	c687-4e11-bbe3-3e2fd41c99113323389	2	Samosa	1	30
+71	c687-4e11-bbe3-3e2fd41c99113323389	7	Chips	1	100
+72	ecab-4c60-99d3-11c7168133a012093200	7	Chips	1	100
+73	ecab-4c60-99d3-11c7168133a012093200	7	Smocha	1	60
+74	c687-4e11-bbe3-3e2fd41c99113885188	7	Chips	2	100
+75	dab3-4cb9-9110-99918efd35e312288284	7	Chips	2	100
+76	a5e9-4493-bf74-289c5402a31844991340	7	Chips	2	100
+77	a5e9-4493-bf74-289c5402a31844991471	2	Chips	1	100
+78	a5e9-4493-bf74-289c5402a31845150499	1	Chapati	5	20
+79	a5e9-4493-bf74-289c5402a31845150499	1	Beef stew	1	140
+80	a5e9-4493-bf74-289c5402a31845150499	1	Samosa	1	40
+81	38d5-4ca6-b9c9-0240a9781f7a12453665	1	Chapati	1	20
+82	a5e9-4493-bf74-289c5402a31846840526	3	Chapati	3	30
+83	a5e9-4493-bf74-289c5402a31846840526	3	Minji	1	100
+84	4f9d-4622-a0da-1c77977dad0c35349488	3	Chapati	1	30
+85	4f9d-4622-a0da-1c77977dad0c35349488	3	Pilau	1	100
+86	4f9d-4622-a0da-1c77977dad0c35349488	7	Smocha	1	60
+87	e1f1-482d-9538-d140c330be9b54240073	1	Beans	1	40
+88	60e4-4f14-997e-f04c8c4f586d9950817	1	Chapati	3	20
+89	38d5-4ca6-b9c9-0240a9781f7a14141178	2	Chapati	1	20
+90	38d5-4ca6-b9c9-0240a9781f7a14145430	2	Chapati	1	20
+91	4f9d-4622-a0da-1c77977dad0c35962334	2	Chapati	1	20
+92	60e4-4f14-997e-f04c8c4f586d10056934	1	Chapati	1	20
+93	60e4-4f14-997e-f04c8c4f586d10056934	1	Kamande	1	50
+94	60e4-4f14-997e-f04c8c4f586d10056934	1	Samosa	1	40
+95	60e4-4f14-997e-f04c8c4f586d10056934	2	Chapati	1	20
+96	6771-4f62-b538-7b914275850551840155	7	Chips	1	100
+97	6771-4f62-b538-7b914275850551840155	7	Smocha	1	60
+98	ecab-4c60-99d3-11c7168133a020540272	2	Chapati	4	20
+99	ecab-4c60-99d3-11c7168133a020540272	2	Pilau	1	100
+100	a5e9-4493-bf74-289c5402a31848633584	2	Chapati	4	20
+101	a5e9-4493-bf74-289c5402a31848633584	2	Pilau	1	100
+102	dab3-4cb9-9110-99918efd35e320756986	1	Smocha	4	60
+103	4f9d-4622-a0da-1c77977dad0c37443487	1	Rice Special	1	120
+104	feab-4d34-8ffb-457d02cd9bfc66454840	3	Pilau	1	100
+105	dab3-4cb9-9110-99918efd35e321471299	1	Rice Special	1	120
+106	dab3-4cb9-9110-99918efd35e321471299	1	Smocha	1	60
+107	38d5-4ca6-b9c9-0240a9781f7a16570631	4	Pilau Special	1	150
+108	c687-4e11-bbe3-3e2fd41c991113133405	7	Chips	1	100
+109	4f9d-4622-a0da-1c77977dad0c37606412	1	Chapati	2	20
+110	4f9d-4622-a0da-1c77977dad0c37606412	1	Viazi	1	40
+111	c687-4e11-bbe3-3e2fd41c991115196254	2	Samosa	1	30
+112	c687-4e11-bbe3-3e2fd41c991115196254	7	Smocha	1	60
+113	38d5-4ca6-b9c9-0240a9781f7a19185829	2	Rice	1	50
+114	38d5-4ca6-b9c9-0240a9781f7a19185829	2	Beef stew	1	170
+115	38d5-4ca6-b9c9-0240a9781f7a19185829	2	Juice large	1	80
+116	a5e9-4493-bf74-289c5402a31850394129	2	Pilau	3	100
+117	a5e9-4493-bf74-289c5402a31850394129	2	Kuku large	1	170
+118	a5e9-4493-bf74-289c5402a31850394129	2	Juice small	1	40
+119	6771-4f62-b538-7b914275850554225758	2	Ugali	1	30
+120	6771-4f62-b538-7b914275850554225758	2	Beef stew	1	170
+121	6771-4f62-b538-7b914275850554225758	2	Juice large	1	80
+122	6771-4f62-b538-7b914275850554258642	1	Chapati	1	20
+123	feab-4d34-8ffb-457d02cd9bfc68351023	1	Chapati	2	20
+124	feab-4d34-8ffb-457d02cd9bfc68351023	1	Ugali	1	30
+125	feab-4d34-8ffb-457d02cd9bfc68351023	1	Beef stew	1	140
+126	38d5-4ca6-b9c9-0240a9781f7a20491106	1	Beans	1	40
+127	dab3-4cb9-9110-99918efd35e327785156	2	Pilau	2	100
+128	dab3-4cb9-9110-99918efd35e327785156	2	Beef stew	1	170
+129	60e4-4f14-997e-f04c8c4f586d19731764	2	Ugali	1	30
+130	60e4-4f14-997e-f04c8c4f586d19731764	2	Beef stew	1	170
+131	60e4-4f14-997e-f04c8c4f586d19731764	2	Juice large	1	80
+132	e1f1-482d-9538-d140c330be9b59274460	1	Matumbo fry	1	90
+133	a5e9-4493-bf74-289c5402a31852252643	1	Matumbo fry	1	90
+134	dab3-4cb9-9110-99918efd35e328233575	4	Beef Burger	1	180
+135	dab3-4cb9-9110-99918efd35e328343069	8	Beef Burger with Fries	1	600
+136	feab-4d34-8ffb-457d02cd9bfc70019896	7	Chips	2	100
+137	60e4-4f14-997e-f04c8c4f586d20039732	7	Chips	2	100
+138	60e4-4f14-997e-f04c8c4f586d21153902	2	Pilau	1	100
+139	60e4-4f14-997e-f04c8c4f586d21153902	2	Kuku large	1	170
+140	60e4-4f14-997e-f04c8c4f586d21153902	2	Juice large	1	80
+141	0a83-4731-ac2e-58dccc54ee5963213997	2	Pilau	2	100
+142	0a83-4731-ac2e-58dccc54ee5963213997	2	Kuku small	1	120
+143	60e4-4f14-997e-f04c8c4f586d21251096	7	Chips	1	100
+144	ecab-4c60-99d3-11c7168133a029625317	2	Chips Masala	1	120
+145	0a83-4731-ac2e-58dccc54ee5964221809	4	Beef Burger	1	180
+146	0a83-4731-ac2e-58dccc54ee5964221809	4	Hungarian Choma Hotdog	1	130
+147	60e4-4f14-997e-f04c8c4f586d21833272	2	Chips Masala	1	120
+148	6304-4ad6-ac84-b19cc6b06d8933179757	2	Chapati	1	20
+149	6304-4ad6-ac84-b19cc6b06d8933714639	1	Smocha	3	60
+150	c687-4e11-bbe3-3e2fd41c991125515622	1	Ugali	1	30
+151	c687-4e11-bbe3-3e2fd41c991125515622	1	Matumbo fry	1	90
+152	6304-4ad6-ac84-b19cc6b06d8934219167	8	Beef Burger with Fries	1	600
+153	ecab-4c60-99d3-11c7168133a034196386	2	Chips	1	100
+154	ecab-4c60-99d3-11c7168133a034196386	2	Chips Masala	1	120
+155	6771-4f62-b538-7b914275850562314366	2	Chapati	4	20
+156	6771-4f62-b538-7b914275850562314366	2	Minced meat	2	80
+157	0a83-4731-ac2e-58dccc54ee5967696995	2	Minced meat	1	80
+158	0a83-4731-ac2e-58dccc54ee5967696995	2	Chips Masala	1	120
+159	0a83-4731-ac2e-58dccc54ee5967755464	1	Smocha	2	60
+160	0a83-4731-ac2e-58dccc54ee5967755464	2	Chapati	2	20
+161	0a83-4731-ac2e-58dccc54ee5967755464	2	Juice small	1	40
+162	0a83-4731-ac2e-58dccc54ee5967755464	7	Chips	1	100
+163	38d5-4ca6-b9c9-0240a9781f7a30747886	1	Smocha	3	60
+164	38d5-4ca6-b9c9-0240a9781f7a30747886	2	Juice large	1	80
+165	60e4-4f14-997e-f04c8c4f586d27287291	7	Chips	1	100
+166	dab3-4cb9-9110-99918efd35e335847085	7	Chips	1	100
+167	dab3-4cb9-9110-99918efd35e335847085	7	Smocha	1	60
+168	0a83-4731-ac2e-58dccc54ee5969069507	2	Chips Masala	1	120
+169	0a83-4731-ac2e-58dccc54ee5969069507	7	Chips	1	100
+170	a5e9-4493-bf74-289c5402a31862174880	2	Pilau	1	100
+171	a5e9-4493-bf74-289c5402a31862174880	2	Samosa	1	30
+172	a5e9-4493-bf74-289c5402a31862174880	2	Juice large	1	80
+173	c687-4e11-bbe3-3e2fd41c991128059847	7	Chips	1	100
+174	6771-4f62-b538-7b914275850567652937	1	Smocha	2	60
+177	e1f1-482d-9538-d140c330be9b71283033	2	Juice small	1	40
+182	feab-4d34-8ffb-457d02cd9bfc80654101	2	Chips Masala	1	120
+190	e1f1-482d-9538-d140c330be9b72775415	4	Pilau Special	1	150
+191	6771-4f62-b538-7b914275850569176989	2	Chips Masala	1	120
+195	38d5-4ca6-b9c9-0240a9781f7a35089681	2	Juice small	1	40
+201	dab3-4cb9-9110-99918efd35e340261904	2	Juice large	1	80
+175	6771-4f62-b538-7b914275850567652937	7	Chips	2	100
+178	e1f1-482d-9538-d140c330be9b71283033	7	Chips	3	100
+179	38d5-4ca6-b9c9-0240a9781f7a32383683	1	Smocha	2	60
+183	feab-4d34-8ffb-457d02cd9bfc80654101	2	Juice large	1	80
+184	feab-4d34-8ffb-457d02cd9bfc81015919	4	Beef Burger	1	180
+186	6304-4ad6-ac84-b19cc6b06d8938014147	1	Matumbo fry	1	90
+189	e1f1-482d-9538-d140c330be9b72759298	2	Beef stew	1	170
+194	feab-4d34-8ffb-457d02cd9bfc81702893	1	Ndengu	1	40
+196	38d5-4ca6-b9c9-0240a9781f7a35089681	7	Chips	2	100
+198	dab3-4cb9-9110-99918efd35e340261904	2	Chapati	1	20
+176	e1f1-482d-9538-d140c330be9b71283033	1	Smocha	3	60
+181	38d5-4ca6-b9c9-0240a9781f7a32383683	7	Chips	2	100
+185	6304-4ad6-ac84-b19cc6b06d8938014147	1	Ugali	1	30
+188	e1f1-482d-9538-d140c330be9b72759298	2	Ugali	1	30
+197	38d5-4ca6-b9c9-0240a9781f7a35089681	7	Smocha	2	60
+199	dab3-4cb9-9110-99918efd35e340261904	2	Rice	1	50
+180	38d5-4ca6-b9c9-0240a9781f7a32383683	2	Juice small	1	40
+187	6304-4ad6-ac84-b19cc6b06d8938014147	2	Samosa	2	30
+192	6771-4f62-b538-7b914275850569176989	6	Ugali Beef	1	180
+193	feab-4d34-8ffb-457d02cd9bfc81702893	1	Chapati	3	20
+200	dab3-4cb9-9110-99918efd35e340261904	2	Beef stew	1	170
+202	ecab-4c60-99d3-11c7168133a040264957	1	Smocha	2	60
+203	ecab-4c60-99d3-11c7168133a040264957	2	Juice small	1	40
+204	ecab-4c60-99d3-11c7168133a040264957	7	Chips	2	100
+205	c687-4e11-bbe3-3e2fd41c991131945454	2	Chapati	4	20
+206	c687-4e11-bbe3-3e2fd41c991131945454	2	Minced meat	3	80
+207	60e4-4f14-997e-f04c8c4f586d32187526	4	Hungarian Choma Hotdog	3	130
+208	e1f1-482d-9538-d140c330be9b74084964	2	Chapati	1	20
+209	e1f1-482d-9538-d140c330be9b74084964	2	Kuku large	1	170
+210	c687-4e11-bbe3-3e2fd41c991132495178	7	Chips	1	100
+211	c687-4e11-bbe3-3e2fd41c991132495178	7	Smocha	1	60
+212	60e4-4f14-997e-f04c8c4f586d33127132	1	Chapati	2	20
+213	60e4-4f14-997e-f04c8c4f586d33127132	1	Pilau	1	100
+214	4f9d-4622-a0da-1c77977dad0c56848643	2	Ugali	1	30
+215	4f9d-4622-a0da-1c77977dad0c56848643	2	Matumbo	1	120
+216	4f9d-4622-a0da-1c77977dad0c56848643	2	Kuku small	1	120
+217	0a83-4731-ac2e-58dccc54ee5976040151	1	Chapati	1	20
+218	4f9d-4622-a0da-1c77977dad0c57310376	6	Chapati 2& Beans	1	80
+219	ecab-4c60-99d3-11c7168133a044551684	6	Chapati 2& Ndengu	1	80
+220	60e4-4f14-997e-f04c8c4f586d36536810	1	Ugali	1	30
+221	60e4-4f14-997e-f04c8c4f586d36536810	1	Sukuma/Cabbage Stew	1	40
+222	60e4-4f14-997e-f04c8c4f586d36536810	1	Scrambled Eggs	1	80
+223	dab3-4cb9-9110-99918efd35e345120712	4	La Creme Burger	1	220
+224	dab3-4cb9-9110-99918efd35e345120712	4	Hungarian Choma Hotdog	1	130
+225	a5e9-4493-bf74-289c5402a31870247800	1	Smocha	4	60
+226	a5e9-4493-bf74-289c5402a31870247800	2	Chapati	1	20
+227	a5e9-4493-bf74-289c5402a31870247800	2	Pilau	2	100
+228	a5e9-4493-bf74-289c5402a31870247800	2	Beef stew	1	170
+229	a5e9-4493-bf74-289c5402a31870247800	2	Juice small	2	40
+230	a5e9-4493-bf74-289c5402a31870247800	2	Juice large	1	80
+231	a5e9-4493-bf74-289c5402a31870247800	7	Chips	3	100
+232	e1f1-482d-9538-d140c330be9b77369042	2	Matumbo	1	120
+233	e1f1-482d-9538-d140c330be9b77369042	2	Chips Masala	1	120
+234	ecab-4c60-99d3-11c7168133a047853995	2	Matumbo	1	120
+235	ecab-4c60-99d3-11c7168133a047853995	2	Chips Masala	1	120
+236	a5e9-4493-bf74-289c5402a31870330032	4	Hungarian Choma Hotdog	1	130
+237	a5e9-4493-bf74-289c5402a31870330032	7	Chips	1	100
+238	c687-4e11-bbe3-3e2fd41c991140125528	7	Smocha	1	60
+239	4f9d-4622-a0da-1c77977dad0c59217320	2	Chapati	2	20
+240	4f9d-4622-a0da-1c77977dad0c59217320	2	Beans	1	40
+241	6771-4f62-b538-7b914275850574150443	2	Pilau	1	100
+242	6771-4f62-b538-7b914275850574150443	2	Samosa	1	30
+243	6304-4ad6-ac84-b19cc6b06d8949532337	2	Chapati	4	20
+244	6304-4ad6-ac84-b19cc6b06d8949532337	2	Minji	2	60
+245	c687-4e11-bbe3-3e2fd41c991142343346	1	Chapati	1	20
+246	c687-4e11-bbe3-3e2fd41c991142343346	1	Ugali	1	30
+247	e1f1-482d-9538-d140c330be9b78954446	4	Pilau Special	1	150
+248	c687-4e11-bbe3-3e2fd41c991143114474	4	Cheese Burger	1	180
+249	c687-4e11-bbe3-3e2fd41c991143114474	4	Beef Burger	1	180
+250	c687-4e11-bbe3-3e2fd41c991143114474	4	La Creme Burger	1	220
+251	c687-4e11-bbe3-3e2fd41c991143114474	4	Hungarian Choma Hotdog	3	130
+252	e1f1-482d-9538-d140c330be9b79055734	4	Cheese Burger	1	180
+253	e1f1-482d-9538-d140c330be9b79055734	4	Beef Burger	1	180
+254	e1f1-482d-9538-d140c330be9b79055734	4	La Creme Burger	1	220
+255	e1f1-482d-9538-d140c330be9b79055734	4	Hungarian Choma Hotdog	3	130
+256	4f9d-4622-a0da-1c77977dad0c60578325	7	Chips	1	100
+257	4f9d-4622-a0da-1c77977dad0c60578325	7	Smocha	3	60
+258	feab-4d34-8ffb-457d02cd9bfc87983953	2	Samosa	2	30
+259	feab-4d34-8ffb-457d02cd9bfc87983953	2	Kebab	2	50
+260	feab-4d34-8ffb-457d02cd9bfc87983953	7	Chips	1	100
+261	a5e9-4493-bf74-289c5402a31872280941	4	Hungarian Choma Hotdog	1	130
+262	a5e9-4493-bf74-289c5402a31872280941	7	Chips	1	100
+263	6304-4ad6-ac84-b19cc6b06d8952588382	2	Chapati	2	20
+264	6304-4ad6-ac84-b19cc6b06d8952588382	2	Pilau	2	100
+265	6304-4ad6-ac84-b19cc6b06d8952588382	2	Kuku small	2	120
+266	e1f1-482d-9538-d140c330be9b79531966	4	La Creme Burger	1	220
+267	feab-4d34-8ffb-457d02cd9bfc88388728	6	Ugali Mix	1	130
+268	60e4-4f14-997e-f04c8c4f586d44307708	8	Beef Stew with Rice	1	300
+269	38d5-4ca6-b9c9-0240a9781f7a48225267	1	Chapati	1	20
+270	38d5-4ca6-b9c9-0240a9781f7a48225267	1	Ugali	1	30
+271	38d5-4ca6-b9c9-0240a9781f7a48225267	1	Scrambled Eggs	1	80
+272	60e4-4f14-997e-f04c8c4f586d46027055	2	Chapati	2	20
+273	60e4-4f14-997e-f04c8c4f586d46027055	2	Pilau	1	100
+274	60e4-4f14-997e-f04c8c4f586d46027055	2	Beans	1	40
+275	ecab-4c60-99d3-11c7168133a054988838	2	Chapati	3	20
+276	ecab-4c60-99d3-11c7168133a054988838	2	Beef stew	1	170
+277	4f9d-4622-a0da-1c77977dad0c62199033	4	La Creme Burger	1	220
+278	6304-4ad6-ac84-b19cc6b06d8955323491	1	Chapati	1	20
+279	6304-4ad6-ac84-b19cc6b06d8955323491	7	Chips	2	100
+280	c687-4e11-bbe3-3e2fd41c991146833913	2	Chips	1	100
+281	a5e9-4493-bf74-289c5402a31873951021	2	Chips	1	100
+282	feab-4d34-8ffb-457d02cd9bfc90230321	6	Chapati 2& Beans	1	80
+283	a5e9-4493-bf74-289c5402a31875467034	1	Chapati	1	20
+285	60e4-4f14-997e-f04c8c4f586d50483166	7	Chips	2	100
+287	60e4-4f14-997e-f04c8c4f586d50483166	7	Boiled Egg	4	25
+288	38d5-4ca6-b9c9-0240a9781f7a54205282	2	Rice	1	50
+290	feab-4d34-8ffb-457d02cd9bfc91782272	4	Hungarian Choma Hotdog	1	130
+284	a5e9-4493-bf74-289c5402a31875467034	7	Chips	2	100
+286	60e4-4f14-997e-f04c8c4f586d50483166	7	Smocha	4	60
+289	38d5-4ca6-b9c9-0240a9781f7a54205282	2	Kuku large	1	170
+291	feab-4d34-8ffb-457d02cd9bfc91782272	7	Chips	1	100
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orders (order_id, order_total, delivery_location, customer_phone, order_status, delivery_status, created_at, delivered_at) FROM stdin;
+60e4-4f14-997e-f04c8c4f586d9950817	105	Contribution	254748467252	Confirmed	Delivered	2024-10-01 00:53:08.573211	2024-10-01 01:23:12.109973
+60e4-4f14-997e-f04c8c4f586d10056934	195	Test Delivery	254748467252	Pending	Null	2024-09-30 23:11:22.412373	\N
+6304-4ad6-ac84-b19cc6b06d8933714639	225	Kabarak chapel	254740813783	Confirmed	Delivered	2024-10-05 14:18:52.569699	2024-10-05 18:04:03.378176
+6771-4f62-b538-7b914275850551840155	205	Kabarak University ladies hostel 	254746935920	Confirmed	Delivered	2024-10-01 10:37:30.278521	2024-10-01 14:14:59.362045
+a5e9-4493-bf74-289c5402a31848633584	245	Elementaita, men's hostel. 	254759511600	Confirmed	Delivered	2024-10-01 12:42:34.372858	2024-10-01 16:56:27.571246
+4f9d-4622-a0da-1c77977dad0c37443487	185	Ladies hostel 	254758444880	Pending	Null	2024-10-01 15:33:10.902648	\N
+feab-4d34-8ffb-457d02cd9bfc66454840	165	Tophill apartment near Brooklyn court 	254716197060	Pending	Null	2024-10-01 15:40:55.787771	\N
+c687-4e11-bbe3-3e2fd41c991113133405	145	Kabarak hostels sote a room 83	254102363272	Pending	Null	2024-10-01 16:27:21.134023	\N
+4f9d-4622-a0da-1c77977dad0c37606412	145	Ladies hostel 	254759209932	Confirmed	Delivered	2024-10-01 16:47:41.046353	2024-10-01 21:21:25.95401
+6771-4f62-b538-7b914275850554258642	65	Kabarak uni	254727298055	Pending	Null	2024-10-02 16:05:40.015878	\N
+feab-4d34-8ffb-457d02cd9bfc68351023	295	Ladies' hostel 	254741763923	Confirmed	Delivered	2024-10-02 16:26:32.163109	2024-10-02 20:13:16.185248
+dab3-4cb9-9110-99918efd35e327785156	475	Universal chapel	254759511600	Confirmed	Delivered	2024-10-03 09:55:54.627655	2024-10-03 14:02:21.870192
+feab-4d34-8ffb-457d02cd9bfc81015919	225	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-07 13:07:41.373134	2024-10-07 18:56:29.257465
+60e4-4f14-997e-f04c8c4f586d19731764	365	Kabarak Chapel	254740813783	Confirmed	Delivered	2024-10-03 11:53:36.503144	2024-10-03 16:24:14.95367
+a5e9-4493-bf74-289c5402a31852252643	155	Elevate 	254717058824	Confirmed	Delivered	2024-10-03 12:46:11.654784	2024-10-03 16:41:15.575749
+dab3-4cb9-9110-99918efd35e328233575	225	Men's hostel	254723996824	Confirmed	Delivered	2024-10-03 13:23:05.056635	2024-10-03 17:11:41.452082
+dab3-4cb9-9110-99918efd35e328343069	665	Promise estate	254794590481	Confirmed	Delivered	2024-10-03 14:52:19.29343	2024-10-04 06:59:57.507642
+60e4-4f14-997e-f04c8c4f586d20039732	245	Ladies hostel gate	254742065435	Confirmed	Delivered	2024-10-03 15:56:41.369325	2024-10-04 07:00:06.099969
+a5e9-4493-bf74-289c5402a31862174880	275	Ladies hostel 	254741763923	Confirmed	Delivered	2024-10-06 15:43:51.062204	2024-10-06 19:22:10.777667
+c687-4e11-bbe3-3e2fd41c991125515622	205	ladies' hostel	254741763923	Confirmed	Delivered	2024-10-05 15:29:27.933562	2024-10-05 19:49:58.163791
+60e4-4f14-997e-f04c8c4f586d21153902	435	Kabarak Chapel	254740813783	Confirmed	Delivered	2024-10-04 09:34:43.841605	2024-10-04 14:05:59.339991
+0a83-4731-ac2e-58dccc54ee5963213997	425	chapel	254759511600	Confirmed	Delivered	2024-10-04 09:48:28.470182	2024-10-04 14:06:03.151287
+60e4-4f14-997e-f04c8c4f586d21251096	145	Kabarak hostels 	254798717602	Confirmed	Delivered	2024-10-04 10:52:50.607273	2024-10-04 14:58:45.554378
+ecab-4c60-99d3-11c7168133a029625317	165	Daborna	254700266581	Confirmed	Delivered	2024-10-04 10:58:41.427025	2024-10-04 15:47:09.168276
+feab-4d34-8ffb-457d02cd9bfc80654101	245	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-07 11:00:43.954962	2024-10-07 18:58:21.832403
+6304-4ad6-ac84-b19cc6b06d8934219167	665	Kabarak University Ladies' Hostel	254724025771	Confirmed	Delivered	2024-10-05 16:25:15.138953	2024-10-05 19:57:23.990848
+0a83-4731-ac2e-58dccc54ee5964221809	355	Ladies hostel gate	254758444880	Confirmed	Delivered	2024-10-04 15:24:31.952621	2024-10-04 20:03:41.978799
+60e4-4f14-997e-f04c8c4f586d21833272	165	Daborna	254700266581	Confirmed	Delivered	2024-10-04 16:36:56.935388	2024-10-04 20:34:32.627982
+6304-4ad6-ac84-b19cc6b06d8933179757	65	Oberur	254748467252	Pending	Null	2024-10-05 11:59:29.673006	\N
+c687-4e11-bbe3-3e2fd41c991128059847	145	Cheche studios 	254714083958	Confirmed	Delivered	2024-10-06 16:58:13.799957	2024-10-06 23:25:17.594323
+ecab-4c60-99d3-11c7168133a034196386	265	Hostel 	254746493943	Confirmed	Delivered	2024-10-05 16:38:01.011921	2024-10-05 20:57:37.586125
+6771-4f62-b538-7b914275850562314366	325	Elevate 	254111776217	Confirmed	Delivered	2024-10-05 16:52:05.723647	2024-10-06 08:46:28.531208
+0a83-4731-ac2e-58dccc54ee5967696995	265	Grey house 	254725383183	Pending	Null	2024-10-06 06:39:37.359978	\N
+6771-4f62-b538-7b914275850567652937	365	Chapel 	254793047078	Pending	Null	2024-10-07 07:47:24.018062	\N
+e1f1-482d-9538-d140c330be9b71283033	565	Chapel 	254793047078	Pending	Null	2024-10-07 07:48:37.057278	\N
+9096-43a2-9c4e-15e6d7a8d8f6172549091	75	Kapken	254748467252	Pending	Null	2023-09-15 13:30:00	\N
+feab-4d34-8ffb-457d02cd9bfc22616500	75	Reha Hostels	254748467252	Pending	Null	2023-09-16 17:45:00	\N
+e1f1-482d-9538-d140c330be9b49137394	390	Kampi	254112407259	Pending	Null	2023-09-17 12:15:00	\N
+9566-48c7-8be0-71e5ae4748f078952799	65	Elevate Apartments	254748467252	Pending	Null	2023-09-18 14:20:00	\N
+8385-4bd1-a41f-473a644f05b520650047	90	Elevate Apartments	254748467252	Confirmed	Delivered	2023-09-19 16:00:00	2023-09-19 13:45:00
+0a83-4731-ac2e-58dccc54ee5967755464	345	Chapel	254793047078	Confirmed	Delivered	2024-10-06 07:00:26.864223	2024-10-06 11:22:19.874228
+dab3-4cb9-9110-99918efd35e335847085	205	Ladies hostel 	254757438505	Pending	Null	2024-10-06 10:09:30.302505	\N
+38d5-4ca6-b9c9-0240a9781f7a30747886	305	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-06 07:48:47.875257	2024-10-06 13:13:14.0963
+60e4-4f14-997e-f04c8c4f586d27287291	145	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-06 07:59:53.672722	2024-10-06 13:13:28.097609
+0a83-4731-ac2e-58dccc54ee5969069507	265	Grey house 	254746802274	Confirmed	Delivered	2024-10-06 13:36:46.858223	2024-10-06 17:22:24.121502
+38d5-4ca6-b9c9-0240a9781f7a35089681	405	Chapel	254793047078	Confirmed	Delivered	2024-10-08 07:42:01.070412	2024-10-08 11:48:11.603971
+e1f1-482d-9538-d140c330be9b72775415	215	Opposite Roswell 	254114717298	Confirmed	Delivered	2024-10-07 16:51:00.087682	2024-10-07 20:55:24.571552
+38d5-4ca6-b9c9-0240a9781f7a32383683	405	Chapel 	254793047078	Confirmed	Delivered	2024-10-07 07:51:05.999735	2024-10-07 16:11:08.066823
+6771-4f62-b538-7b914275850569176989	365	Bishop house Y22	254796277850	Confirmed	Delivered	2024-10-07 17:09:19.883935	2024-10-07 22:10:01.119053
+e1f1-482d-9538-d140c330be9b72759298	285	Hostel	254746493943	Confirmed	Delivered	2024-10-07 16:42:09.030404	2024-10-07 20:58:42.368279
+6304-4ad6-ac84-b19cc6b06d8938014147	265	Ladies' Hostel 	254741763923	Confirmed	Delivered	2024-10-07 15:55:57.484888	2024-10-07 20:58:43.151268
+feab-4d34-8ffb-457d02cd9bfc81702893	165	Preston	254790447342	Confirmed	Delivered	2024-10-07 17:43:23.941113	2024-10-07 22:09:57.028874
+ecab-4c60-99d3-11c7168133a040264957	405	Chapel	254793047078	Confirmed	Delivered	2024-10-08 09:30:23.986572	2024-10-08 13:51:57.005451
+c687-4e11-bbe3-3e2fd41c991131945454	425	Kabarak hostel 	254799655995	Confirmed	Delivered	2024-10-08 09:56:01.337459	2024-10-08 13:52:16.660588
+dab3-4cb9-9110-99918efd35e340261904	405	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-08 09:14:34.165908	2024-10-08 13:51:29.553097
+60e4-4f14-997e-f04c8c4f586d32187526	435	Oloika SDA church	254700771216	Confirmed	Delivered	2024-10-08 11:10:56.15293	2024-10-08 14:43:30.652196
+e1f1-482d-9538-d140c330be9b74084964	255	Emmaus 	254726596349	Confirmed	Delivered	2024-10-08 12:50:04.283572	2024-10-08 17:11:30.706384
+c687-4e11-bbe3-3e2fd41c991132495178	205	Sote a room 84 ... Kabarak hostels 	254795312155	Confirmed	Delivered	2024-10-08 13:09:16.479618	2024-10-08 16:57:57.775838
+60e4-4f14-997e-f04c8c4f586d33127132	205	Ladies hostel 	254741763923	Confirmed	Delivered	2024-10-08 16:13:48.238456	2024-10-08 19:35:57.487422
+0a83-4731-ac2e-58dccc54ee5976040151	65	Tesr	254748467252	Pending	Null	2024-10-09 12:11:56.618986	\N
+e1f1-482d-9538-d140c330be9b12170983	65	Reha	254748467252	Confirmed	Delivered	2023-09-20 19:30:00	2023-09-20 17:15:00
+0a83-4731-ac2e-58dccc54ee5922385209	335	Raff	254795553007	Pending	Null	2023-09-21 11:45:00	\N
+6304-4ad6-ac84-b19cc6b06d897449817	365	Bishop House, Y22	254790087263	Confirmed	Delivered	2023-09-22 15:10:00	2023-09-22 13:00:00
+4f9d-4622-a0da-1c77977dad0c3756411	245	Sammalia	254798231037	Confirmed	Delivered	2023-09-23 18:20:00	2023-09-23 16:05:00
+ecab-4c60-99d3-11c7168133a07659143	225	De casa 	254112647041	Confirmed	Delivered	2023-09-24 13:00:00	2023-09-24 10:45:00
+e1f1-482d-9538-d140c330be9b22491409	85	Cheche studios	254714083958	Confirmed	Delivered	2023-09-25 17:30:00	2023-09-25 15:15:00
+9566-48c7-8be0-71e5ae4748f094164622	165	Behind Barack hotel 	254115330967	Pending	Null	2023-09-26 12:45:00	\N
+a5e9-4493-bf74-289c5402a31821516140	145	Sote A kabarak hostels 	254795312154	Pending	Null	2023-09-27 14:30:00	\N
+9566-48c7-8be0-71e5ae4748f0101419464	215	Parkcourt room 18	254717641823	Confirmed	Delivered	2023-09-28 16:15:00	2023-09-28 14:00:00
+4f9d-4622-a0da-1c77977dad0c35349488	255	De casa	254796960035	Confirmed	Delivered	2023-09-29 19:00:00	2023-09-29 16:45:00
+34ab-403e-b643-0699f1002087127184237	255	Ladies hostel Kabarak 	254759209932	Confirmed	Delivered	2023-09-30 13:20:00	2023-09-30 11:05:00
+0a83-4731-ac2e-58dccc54ee5949875097	325	Cheche	254708663288	Pending	Null	2023-09-01 15:45:00	\N
+e1f1-482d-9538-d140c330be9b49412427	245	Oberur	254791692880	Confirmed	Delivered	2023-09-02 18:30:00	2023-09-02 16:15:00
+0a83-4731-ac2e-58dccc54ee5931889696	85	Ladies hostel 	254796731739	Pending	Null	2023-09-03 12:00:00	\N
+4f9d-4622-a0da-1c77977dad0c12973294	85	Ladies hostel 	254796731739	Confirmed	Delivered	2023-09-04 14:45:00	2023-09-04 12:30:00
+f94f-4acd-a303-8fbbcf917962208668122	185	Ladies hostel-gate	254742065435	Confirmed	Delivered	2023-09-05 17:15:00	2023-09-05 15:00:00
+34ab-403e-b643-0699f1002087134360375	265	Kapken bedsitter room 32	254713711302	Pending	Null	2023-09-06 19:30:00	\N
+e1f1-482d-9538-d140c330be9b50144025	65	Lonnex	254765487686	Pending	Null	2023-09-07 13:00:00	\N
+4f9d-4622-a0da-1c77977dad0c19779708	85	Chapchap Eastgate apartment 	254112163559	Pending	Null	2023-09-08 15:20:00	\N
+f94f-4acd-a303-8fbbcf917962213209611	205	Hostel 	254741763923	Confirmed	Delivered	2023-09-09 18:45:00	2023-09-09 16:30:00
+60e4-4f14-997e-f04c8c4f586d609169	165	Purple 	254712108743	Pending	Null	2023-09-10 12:30:00	\N
+ecab-4c60-99d3-11c7168133a0654089	225	BARINGO hostel room 46	254701527935	Confirmed	Delivered	2023-09-11 14:15:00	2023-09-11 12:00:00
+6304-4ad6-ac84-b19cc6b06d891194286	105	cheche studios	254740041919	Pending	Null	2023-09-12 17:00:00	\N
+6304-4ad6-ac84-b19cc6b06d8911376321	145	Ladies hostel sote A	254705928144	Pending	Null	2023-09-13 19:30:00	\N
+6771-4f62-b538-7b914275850536016561	165	Kapken bedsitter room 32	254713711302	Confirmed	Delivered	2023-09-14 13:45:00	2023-09-14 11:30:00
+ecab-4c60-99d3-11c7168133a03422888	105	Westville 	254703450479	Pending	Null	2023-09-15 16:15:00	\N
+4f9d-4622-a0da-1c77977dad0c23383732	145	Males hostel Baringo 46	254701527935	Confirmed	Delivered	2023-09-16 18:40:00	2023-09-16 16:25:00
+6771-4f62-b538-7b914275850539111687	105	Home	254748467252	Confirmed	Delivered	2023-09-17 12:20:00	2023-09-17 10:05:00
+6304-4ad6-ac84-b19cc6b06d893438699	105	Home	254703450479	Confirmed	Delivered	2023-09-18 14:50:00	2023-09-18 12:35:00
+dab3-4cb9-9110-99918efd35e35111377	105	Home	254703450479	Pending	Null	2023-09-19 17:10:00	\N
+feab-4d34-8ffb-457d02cd9bfc55662975	205	Rafiki	254748467252	Pending	Null	2023-09-20 19:30:00	\N
+a5e9-4493-bf74-289c5402a31838722259	115	TEst Delivery	254748467252	Pending	Null	2023-09-21 13:00:00	\N
+a5e9-4493-bf74-289c5402a31838769671	115	Another Test Delivery	254748467252	Pending	Null	2023-09-22 15:25:00	\N
+a5e9-4493-bf74-289c5402a31838960504	815	Nakuru Town	254704563198	Pending	Null	2023-09-23 18:45:00	\N
+e1f1-482d-9538-d140c330be9b47990711	105	Home	254703450479	Pending	Null	2023-09-24 12:15:00	\N
+ecab-4c60-99d3-11c7168133a07305515	105	Westville 	254703450479	Pending	Null	2023-09-25 14:40:00	\N
+a5e9-4493-bf74-289c5402a31841508185	65	Test	254748467252	Pending	Null	2023-09-26 17:05:00	\N
+ecab-4c60-99d3-11c7168133a012093200	205	Ladies hostel gate	254742065435	Pending	Null	2023-09-28 13:10:00	\N
+c687-4e11-bbe3-3e2fd41c99113885188	245	Stage one	254743743987	Pending	Null	2023-09-29 15:35:00	\N
+a5e9-4493-bf74-289c5402a31844991340	245	Stage one	254743743987	Pending	Null	2023-09-30 18:00:00	\N
+a5e9-4493-bf74-289c5402a31844991471	145	Opposite Roswell 	254114717298	Pending	Null	2023-09-01 12:30:00	\N
+e1f1-482d-9538-d140c330be9b51771349	225	Elevate	254758787080	Confirmed	Delivered	2023-09-02 14:55:00	2023-09-02 12:40:00
+c687-4e11-bbe3-3e2fd41c99113323389	175	Ladies hostel gate	254757647054	Confirmed	Delivered	2023-09-03 17:20:00	2023-09-03 15:05:00
+dab3-4cb9-9110-99918efd35e312288284	245	Stage one	254743743987	Confirmed	Delivered	2023-09-04 19:45:00	2023-09-04 17:30:00
+a5e9-4493-bf74-289c5402a31845150499	345	Ladies' hostel 	254741763923	Confirmed	Delivered	2023-09-05 13:15:00	2023-09-05 11:00:00
+38d5-4ca6-b9c9-0240a9781f7a12453665	65	Test	254748467252	Pending	Null	2023-09-06 15:40:00	\N
+a5e9-4493-bf74-289c5402a31846840526	255	De Casa	254796960035	Pending	Null	2023-09-07 18:05:00	\N
+60e4-4f14-997e-f04c8c4f586d9828031	105	Contribution	254748467252	Confirmed	Delivered	2024-09-30 23:53:42.365547	2024-10-01 00:43:52.433044
+e1f1-482d-9538-d140c330be9b54240073	105	Westville 	254703450479	Confirmed	Delivered	2023-09-27 19:30:00	2024-10-01 00:44:04.597886
+60e4-4f14-997e-f04c8c4f586d9938873	105	Contribution	254748467252	Pending	Null	2024-10-01 00:45:28.294258	\N
+38d5-4ca6-b9c9-0240a9781f7a14141178	65	test	254748467252	Confirmed	Delivered	2024-10-01 01:01:04.223512	2024-10-01 01:23:18.230288
+38d5-4ca6-b9c9-0240a9781f7a14145430	65	Test	254748467252	Confirmed	Delivered	2024-10-01 01:04:53.142253	2024-10-01 01:23:24.633952
+4f9d-4622-a0da-1c77977dad0c35962334	65	test	254748467252	Confirmed	Delivered	2024-10-01 01:09:00.917656	2024-10-01 01:24:54.062642
+ecab-4c60-99d3-11c7168133a020540272	245	University chapel	254793047078	Pending	Null	2024-10-01 12:22:17.504037	\N
+dab3-4cb9-9110-99918efd35e321471299	245	Oberur 	254791692880	Confirmed	Delivered	2024-10-01 16:19:18.611696	2024-10-01 21:21:29.710275
+dab3-4cb9-9110-99918efd35e320756986	285	University chapel	254740813783	Confirmed	Delivered	2024-10-01 13:18:28.932282	2024-10-01 16:56:24.490859
+38d5-4ca6-b9c9-0240a9781f7a16570631	215	Opposite Roswell 	254114717298	Confirmed	Delivered	2024-10-01 16:23:00.367583	2024-10-01 20:00:08.473027
+a5e9-4493-bf74-289c5402a31850394129	635	University chapel	254759511600	Confirmed	Delivered	2024-10-02 10:18:57.551394	2024-10-02 14:26:35.104259
+c687-4e11-bbe3-3e2fd41c991115196254	135	Grey house 	254746802274	Confirmed	Delivered	2024-10-02 06:43:39.692999	2024-10-02 12:56:32.172656
+38d5-4ca6-b9c9-0240a9781f7a19185829	385	Kabarak chapel	254740813783	Confirmed	Delivered	2024-10-02 09:52:25.402681	2024-10-02 13:33:44.8855
+38d5-4ca6-b9c9-0240a9781f7a20491106	105	Home	254703450479	Confirmed	Delivered	2024-10-02 16:42:17.740145	2024-10-02 19:48:01.487048
+e1f1-482d-9538-d140c330be9b59274460	155	Elevate 	254717058824	Pending	Null	2024-10-03 12:38:00.331245	\N
+6771-4f62-b538-7b914275850554225758	365	Kabarak Chapel	254740813783	Confirmed	Delivered	2024-10-02 15:44:17.862231	2024-10-02 19:47:46.014829
+feab-4d34-8ffb-457d02cd9bfc70019896	245	0741763923	254741763923	Pending	Null	2024-10-03 15:55:42.739431	\N
+4f9d-4622-a0da-1c77977dad0c56848643	375	Daborna House 25	254700266581	Confirmed	Delivered	2024-10-09 07:46:23.306273	2024-10-09 15:12:48.98592
+e1f1-482d-9538-d140c330be9b77369042	305	SACHA ESTATE	254790448137	Pending	Null	2024-10-10 11:38:46.301744	\N
+ecab-4c60-99d3-11c7168133a047853995	305	SACHA ESTATE	254790448137	Confirmed	Delivered	2024-10-10 11:40:07.111701	2024-10-10 18:40:03.33325
+a5e9-4493-bf74-289c5402a31870330032	275	Kapken bedsitters house 84	254742065435	Confirmed	Delivered	2024-10-10 11:52:07.857779	2024-10-10 18:40:07.258802
+38d5-4ca6-b9c9-0240a9781f7a54205282	310	Kapken house 64	254702650273	Confirmed	Delivered	2024-10-13 10:58:36.292205	2024-10-13 15:38:49.148443
+feab-4d34-8ffb-457d02cd9bfc91782272	280	Ladies hostel	254742065435	Confirmed	Null	2024-10-13 14:37:13.271542	\N
+4f9d-4622-a0da-1c77977dad0c60578325	325	De casa 	254112647041	Confirmed	Delivered	2024-10-11 11:59:59.365845	2024-10-11 18:13:47.59473
+4f9d-4622-a0da-1c77977dad0c57310376	145	Hostel	254701527935	Pending	Null	2024-10-09 13:35:05.578079	\N
+dab3-4cb9-9110-99918efd35e345120712	395	Daborna House Number 25	254700266581	Confirmed	Delivered	2024-10-09 16:11:53.841948	2024-10-09 20:11:06.470931
+a5e9-4493-bf74-289c5402a31870247800	1195	Chapel	254740813783	Confirmed	Delivered	2024-10-10 10:43:30.577204	2024-10-10 18:40:00.16926
+6771-4f62-b538-7b914275850574150443	195	Emmaus 	254740041919	Confirmed	Delivered	2024-10-10 16:54:51.049045	2024-10-10 20:26:32.973125
+e1f1-482d-9538-d140c330be9b78954446	215	Daborna	254791568204	Confirmed	Delivered	2024-10-11 10:01:26.274095	2024-10-11 13:52:34.605871
+ecab-4c60-99d3-11c7168133a044551684	145	Men's Hostel	254701527935	Confirmed	Delivered	2024-10-09 13:36:17.196291	2024-10-09 17:39:27.287444
+60e4-4f14-997e-f04c8c4f586d36536810	255	Ladies' hostel	254741763923	Confirmed	Delivered	2024-10-09 15:24:11.175285	2024-10-09 19:13:51.653672
+6304-4ad6-ac84-b19cc6b06d8949532337	285	Bishop house y22	254790087263	Confirmed	Delivered	2024-10-10 18:29:55.46901	2024-10-11 09:50:13.97561
+c687-4e11-bbe3-3e2fd41c991143114474	1015	Daborna House 25	254700266581	Pending	Null	2024-10-11 11:10:41.961602	\N
+e1f1-482d-9538-d140c330be9b79055734	1015	Daborna House 25	254700266581	Confirmed	Delivered	2024-10-11 11:13:07.485578	2024-10-11 18:13:58.618631
+feab-4d34-8ffb-457d02cd9bfc87983953	305	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-11 12:21:53.232206	2024-10-11 18:14:07.193807
+a5e9-4493-bf74-289c5402a31872280941	275	Ladies hostel gate	254742065435	Confirmed	Delivered	2024-10-11 14:32:00.740457	2024-10-11 18:14:17.46741
+a5e9-4493-bf74-289c5402a31875467034	265	Mens hostel kabarak 	254790879622	Confirmed	Delivered	2024-10-13 09:27:39.474742	2024-10-13 13:23:21.622059
+c687-4e11-bbe3-3e2fd41c991140125528	105	Parkcourt room 18	254717641823	Confirmed	Delivered	2024-10-10 14:57:45.971358	2024-10-10 18:39:55.167425
+4f9d-4622-a0da-1c77977dad0c59217320	145	Ladies hostel 	254717734354	Confirmed	Delivered	2024-10-10 16:40:11.751397	2024-10-10 20:30:38.110148
+c687-4e11-bbe3-3e2fd41c991142343346	115	Zaburi	254790901230	Pending	Null	2024-10-11 06:46:11.31029	\N
+6304-4ad6-ac84-b19cc6b06d8952588382	605	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-11 15:56:05.711808	2024-10-11 20:31:11.062901
+e1f1-482d-9538-d140c330be9b79531966	265	Daborna	254791568204	Confirmed	Delivered	2024-10-11 16:27:30.101323	2024-10-11 20:31:39.94503
+38d5-4ca6-b9c9-0240a9781f7a48225267	215	Greyhouse	254743452114	Pending	Null	2024-10-11 18:13:59.191811	\N
+60e4-4f14-997e-f04c8c4f586d44307708	365	Pink House number 3	254748514977	Confirmed	Delivered	2024-10-11 16:42:54.065211	2024-10-11 22:06:07.777949
+feab-4d34-8ffb-457d02cd9bfc88388728	195	Girls hostel 	254113360744	Confirmed	Delivered	2024-10-11 16:40:48.26692	2024-10-11 22:06:15.313946
+60e4-4f14-997e-f04c8c4f586d46027055	265	Sacha estate	254790448137	Confirmed	Delivered	2024-10-12 05:56:01.323968	2024-10-12 12:30:44.319023
+ecab-4c60-99d3-11c7168133a054988838	295	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-12 09:29:56.789892	2024-10-12 13:35:11.446014
+4f9d-4622-a0da-1c77977dad0c62199033	265	Daborna	254791568204	Confirmed	Delivered	2024-10-12 09:40:25.21619	2024-10-12 13:36:19.691256
+a5e9-4493-bf74-289c5402a31873951021	145	Koech apartments besides Eastgate 	254714151901	Pending	Null	2024-10-12 12:44:39.142404	\N
+6304-4ad6-ac84-b19cc6b06d8955323491	265	Kabarak hostel	254704680720	Confirmed	Delivered	2024-10-12 10:32:29.442751	2024-10-12 15:50:03.590251
+c687-4e11-bbe3-3e2fd41c991146833913	145	Ladies hostel gate	254742448170	Confirmed	Delivered	2024-10-12 10:53:21.799756	2024-10-12 18:01:53.132537
+feab-4d34-8ffb-457d02cd9bfc90230321	145	Bishop house M19	254728462405	Confirmed	Delivered	2024-10-12 16:48:56.788331	2024-10-12 21:20:27.930054
+60e4-4f14-997e-f04c8c4f586d50483166	585	Kabarak hostel gate	254740813783	Confirmed	Delivered	2024-10-13 09:46:46.704056	2024-10-13 13:13:14.75421
+\.
+
+
+--
+-- Name: hotels_hotel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.hotels_hotel_id_seq', 1, false);
+
+
+--
+-- Name: menu_menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.menu_menu_id_seq', 2, true);
+
+
+--
+-- Name: order_items_order_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.order_items_order_item_id_seq', 291, true);
+
+
+--
+-- Name: hotels hotels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hotels
+    ADD CONSTRAINT hotels_pkey PRIMARY KEY (hotel_id);
+
+
+--
+-- Name: menu menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.menu
+    ADD CONSTRAINT menu_pkey PRIMARY KEY (menu_id);
+
+
+--
+-- Name: order_items order_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_items
+    ADD CONSTRAINT order_items_pkey PRIMARY KEY (order_item_id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (order_id);
+
+
+--
+-- Name: menu menu_hotel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.menu
+    ADD CONSTRAINT menu_hotel_id_fkey FOREIGN KEY (hotel_id) REFERENCES public.hotels(hotel_id);
+
+
+--
+-- Name: order_items order_items_hotel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_items
+    ADD CONSTRAINT order_items_hotel_id_fkey FOREIGN KEY (hotel_id) REFERENCES public.hotels(hotel_id);
+
+
+--
+-- Name: order_items order_items_order_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_items
+    ADD CONSTRAINT order_items_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(order_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

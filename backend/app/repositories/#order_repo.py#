@@ -277,7 +277,7 @@ class OrderRepository:
             or 0
         )
 
-        total_revenue_week = total_orders_week * 50
+        total_revenue_week = confirmed_orders_week * 50
 
         return {
             "week_number": week_number,

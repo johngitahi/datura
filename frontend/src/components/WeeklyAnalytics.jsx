@@ -27,7 +27,7 @@ const WeeklyAnalytics = () => {
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
-      <h2 className="text-lg font-semibold mb-4">Weekly Analytics</h2>
+      <h2 className="text-lg font-semibold mb-4">Week {weekAnalytics.week_number} Analytics</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-blue-100 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-blue-800 mb-2">Total Orders</h3>
@@ -38,7 +38,11 @@ const WeeklyAnalytics = () => {
           <p className="text-2xl font-bold text-green-900">{weekAnalytics.confirmed_orders_week}</p>
         </div>
         <div className="bg-purple-100 p-4 rounded-lg">
-          <h3 className="text-sm font-medium text-purple-800 mb-2">Total Revenue</h3>
+          <h3 className="text-sm font-medium text-purple-800 mb-2">Total Transactions</h3>
+          <p className="text-2xl font-bold text-purple-900">Kes.{weekAnalytics.total_transactions_week.toFixed(2)}</p>
+        </div>
+	<div className="bg-purple-100 p-4 rounded-lg">
+          <h3 className="text-sm font-medium text-purple-800 mb-2">Total Orders Revenue</h3>
           <p className="text-2xl font-bold text-purple-900">Kes.{weekAnalytics.total_revenue_week.toFixed(2)}</p>
         </div>
       </div>
