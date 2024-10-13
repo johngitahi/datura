@@ -48,7 +48,14 @@ const DailyAnalytics = () => {
         </div>
         <div className="bg-purple-100 p-4 rounded-lg">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-medium text-purple-800">Total Revenue</h3>
+            <h3 className="text-sm font-medium text-purple-800">Total Transactions</h3>
+            <DollarSign className="h-5 w-5 text-purple-600" />
+          </div>
+          <p className="text-2xl font-bold text-purple-900">Kes.{dayAnalytics.total_transactions_today.toFixed(2)}</p>
+        </div>
+	<div className="bg-purple-100 p-4 rounded-lg">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-medium text-purple-800">Total Orders Revenue</h3>
             <DollarSign className="h-5 w-5 text-purple-600" />
           </div>
           <p className="text-2xl font-bold text-purple-900">Kes.{dayAnalytics.total_revenue_today.toFixed(2)}</p>

@@ -190,7 +190,7 @@ class OrderRepository:
         )
 
         # Total revenue today
-        total_revenue_today = (
+        total_transactions_today = (
             db.query(Orders)
             .filter(
                 Orders.created_at >= today_start,
@@ -202,10 +202,13 @@ class OrderRepository:
             or 0
         )
 
+        total_revenue_today = confirmed_orders_today * 50
+
         return {
             "total_orders_today": total_orders_today,
             "confirmed_orders_today": confirmed_orders_today,
             "total_revenue_today": total_revenue_today,
+            "total_transactions_today": total_transactions_today,
         }
 
     def get_all_orders_for_today(self, db: SessionType):
@@ -277,7 +280,7 @@ class OrderRepository:
             or 0
         )
 
-        total_revenue_week = total_orders_week * 50
+        total_revenue_week = confirmed_orders_week * 50
 
         return {
             "week_number": week_number,
