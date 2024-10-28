@@ -76,7 +76,7 @@ class OrderRepository:
         }
 
         message = (
-            f"New order: `{merchantID}`\n"
+            f"New order\n"
             f"Confirm here: https://t\.ly/VMRL4\n"
             f"Delivery Location: {new_order_data['address']}\n"
             f"Total Amount: {new_order_data['total']} KES\n"

@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from repositories import menu_repo, hotel_repo, order_repo, user_repo
+from repositories import menu_repo, hotel_repo, order_repo
 from database import SessionLocal, engine
 from domain import models
 from config import settings
@@ -40,15 +40,13 @@ app.add_middleware(
 menu_repository = menu_repo.MenuRepository()
 hotel_repository = hotel_repo.HotelRepository()
 order_repository = order_repo.OrderRepository()
-user_repository = user_repo.UserRepository()
 
 
 # wire the routers to the main application
-from routers import hotels, orders, users, payments
+from routers import hotels, orders, payments
 
 app.include_router(hotels.router)
 app.include_router(orders.router)
-app.include_router(users.router)
 app.include_router(payments.router)
 
 """ other endpoints to implement 

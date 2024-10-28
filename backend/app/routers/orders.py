@@ -100,21 +100,21 @@ def update_order_deliverey_status(order_id, db: Session = Depends(get_db)):
 
 @router.get("/today")
 def get_today_orders(db: Session = Depends(get_db)):
-    today_orders = order_repository.get_today_orders()
+    today_orders = order_repository.get_today_orders(db)
     return today_orders
 
 @router.get("/weekanalytics")
 def get_week_analytics(db: Session = Depends(get_db)):
-    week_analytics = order_repository.get_order_analytics_for_week()
+    week_analytics = order_repository.get_order_analytics_for_week(db)
     return week_analytics
 
 @router.get("/dayanalytics")
 def get_day_analytics(db: Session = Depends(get_db)):
-    day_analytics = order_repository.get_order_analytics_today()
+    day_analytics = order_repository.get_order_analytics_today(db)
     return day_analytics
 
 @router.get("/alltoday")
 def get_all_orders_today(db: Session = Depends(get_db)):
-    all_orders_today = order_repository.get_all_orders_for_today()
+    all_orders_today = order_repository.get_all_orders_for_today(db)
     return all_orders_today
     
