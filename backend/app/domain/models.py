@@ -1,10 +1,27 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from database import Base
 
-"""THINK: USE auth0 to handle users, im stuck. anxiety is the dizziness of choice"""
+def eat_timezone_now():
+    """Returns current datetime in EAT (UTC+3)"""
+    return datetime.utcnow() + timedelta(hours=3)
+
+"""THINK: USE auth0 to halass Orders(Base):
+    __tablename__ = "orders"
+
+    # this will use the mpesa MerchantReqestID retrieved as the order_id to
+    # simplify updating an order status
+    order_id = Column(String, primary_key=True, nullable=False)
+    order_total = Column(Integer, nullable=False)
+    delivery_location = Column(String, nullable=False)
+    customer_phone = Column(String, nullable=False)
+    order_status = Column(String, nullable=False)
+    delivery_status = Column(String(20), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    delivered_at = Column(DateTime, nullable=True)
+    items = relationship("OrderItem", back_populates="order")ndle users, im stuck. anxiety is the dizziness of choice"""
 class Hotels(Base):
     __tablename__ = "hotels"
     hotel_id = Column(Integer, primary_key=True, autoincrement=True)
@@ -26,7 +43,7 @@ class Orders(Base):
     customer_phone = Column(String, nullable=False)
     order_status = Column(String, nullable=False)
     delivery_status = Column(String(20), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, default=eat_timezone_now, nullable=False)
     delivered_at = Column(DateTime, nullable=True)
     items = relationship("OrderItem", back_populates="order")
 
