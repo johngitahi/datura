@@ -50,7 +50,7 @@ const Cart = () => {
   const foodProductsWithNoContainerCharge = [
     1, 17, 18, 19, 20, 25, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 50, 51, 59,
     74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 105, 106, 107, 108,
-    109, 110,
+      109, 110, 136, 137, 138, 142, 141, 140, 139, 143
   ]; // this line is very important
 
   const subTotal = getProducts().reduce(

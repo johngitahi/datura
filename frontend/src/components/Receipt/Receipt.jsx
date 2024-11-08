@@ -30,7 +30,7 @@ const Receipt = ({ subTotal, packagingPrice }) => {
 
       <ReceiptItem label="Subtotal" price={subTotal} />
       <ReceiptItem label="Delivery Fee" price={delivFees} />
-      <ReceiptItem label="Packaging (per item)" price={packagingPrice} />
+      <ReceiptItem label="Packaging and Handling" price={packagingPrice} />
       <ReceiptItem label="Total" price={totalPrice} highlight={true} />
     </div>
   );

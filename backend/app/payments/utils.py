@@ -74,7 +74,7 @@ async def trigger_stkp_payment(amount: int, client_mpesa_no: int):
     }
 
     response = requests.post(
-        settings.mpesa_express_endpoint, headers=headers, json=payload, timeout=10
+        settings.mpesa_express_endpoint, headers=headers, json=payload, timeout=30
     )
 
     # print(settings.mpesa_express_endpoint)

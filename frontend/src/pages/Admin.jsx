@@ -16,6 +16,9 @@ function Admin() {
 				<div className={styles.navlink}>
 					<Link to="/AddHotel">Add Hotel</Link>
 				</div>
+			        <div className={styles.navlink}>
+					<Link to="/research">Analytics</Link>
+				</div>
 				<LogoutButton />
 			</div>
 		</div>
